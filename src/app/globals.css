@@ -1,6 +1,4 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
 
 :root {
   --background: #F9F7F7;
@@ -8,11 +6,11 @@
 }
 
 .dot-indicator {
-  background-color: #DBE2EF;
+  background-color: #3F72AF;
 }
 
 .dot-indicator[data-active="true"] {
-  background-color: #3F72AF;
+  background-color: #DBE2EF;
 }
 
 
@@ -23,11 +21,11 @@
   }
 
   .dot-indicator {
-    background-color: #3F72AF;
+    background-color: #DBE2EF;
   }
 
   .dot-indicator[data-active="true"] {
-    background-color: #F9F7F7;
+    background-color: #3F72AF;
   }
 }
 
