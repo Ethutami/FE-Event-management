@@ -39,8 +39,7 @@ const CategoryChips = async () => {
                             <Image
                                 src={category.path}
                                 alt={category.category}
-                                objectFit="cover"
-                                className="flex items-center justify-center w-32 h-32 sm:w-30 sm:h-30 md:w-30 md:h-30 rounded-full"
+                                className="object-cover flex items-center justify-center w-32 h-32 sm:w-30 sm:h-30 md:w-30 md:h-30 rounded-full"
                                 width={100}
                                 height={100}
                             />
