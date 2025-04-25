@@ -13,6 +13,10 @@
   background-color: #DBE2EF;
 }
 
+.button {
+  background-color: #112D4E;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -25,6 +29,10 @@
   }
 
   .dot-indicator[data-active="true"] {
+    background-color: #3F72AF;
+  }
+
+  .button {
     background-color: #3F72AF;
   }
 }

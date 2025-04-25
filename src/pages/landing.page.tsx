@@ -1,5 +1,6 @@
 import { ImageSlider } from "@/components/slider.component"
 import CategoryChips from '@/components/category.component';
+import CardComponent from "@/components/card.component";
 
 const HeroSection = () => {
     return (
@@ -16,6 +17,7 @@ export default function LandingPage() {
         <div>
             <HeroSection />
             <CategorySection />
+            <CardComponent />
         </div>
     )
 
