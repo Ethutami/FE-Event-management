@@ -1,21 +1,33 @@
-@import "tailwindcss";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 :root {
   --background: #F9F7F7;
   --foreground: #112D4E;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dot-indicator {
+  background-color: #DBE2EF;
 }
+
+.dot-indicator[data-active="true"] {
+  background-color: #3F72AF;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #112D4E;
     --foreground: #F9F7F7;
+  }
+
+  .dot-indicator {
+    background-color: #3F72AF;
+  }
+
+  .dot-indicator[data-active="true"] {
+    background-color: #F9F7F7;
   }
 }
 
