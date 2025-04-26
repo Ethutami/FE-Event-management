@@ -43,6 +43,8 @@ const DateConvert = (s: string): [string, string] => {
 
 const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
     const [date, time] = DateConvert(start_date)
+    const priceTag = Number(price) != 0 ? `Rp.${price}` : 'Free'
+
     return (
         <div className="bg-white rounded-2xl shadow-md overflow-hidden w-full max-w-xs">
             <div className="relative h-40 w-full">
@@ -58,7 +60,7 @@ const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
             <div className="p-4 bg-blue-50 text-sm">
                 <h3 className="font-semibold text-gray-800 mb-1">{name}</h3>
                 <p className="text-gray-600">{`${date} | ${time}`}</p>
-                <p className="mt-2 text-lg font-bold text-gray-800">{price}</p>
+                <p className="mt-2 text-lg font-bold text-gray-800">{priceTag}</p>
                 {id && (
                     <button className="button mt-3 px-4 py-1 rounded-md text-[#F9F7F7]">Book</button>
                 )}
