@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { IEvent } from "@/interfaces/events.intervace";
+import formatDate from "./dateformater";
 
 async function fetchData() {
     try {
@@ -24,25 +25,10 @@ async function fetchData() {
     }
 }
 
-const DateConvert = (s: string): [string, string] => {
-    const d = new Date(s);
-
-    const date = new Intl.DateTimeFormat('id-ID', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-    }).format(d);
-
-    const time = new Intl.DateTimeFormat('id-ID', {
-        hour: '2-digit',
-        minute: '2-digit',
-    }).format(d);
-
-    return [date, time];
-};
-
 const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
-    const [date, time] = DateConvert(start_date)
+    console.log(start_date);
+
+    const date = formatDate(start_date, false, true)
     const priceTag = Number(price) != 0 ? `Rp.${price}` : 'Free'
 
     return (
@@ -58,9 +44,9 @@ const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
                 />
             </div>
             <div className="p-4 bg-blue-50 text-sm">
-                <h3 className="font-semibold text-gray-800 mb-1">{name}</h3>
-                <p className="text-gray-600">{`${date} | ${time}`}</p>
-                <p className="mt-2 text-lg font-bold text-gray-800">{priceTag}</p>
+                <h3 className="font-semibold text-gray-400 mb-1">{name}</h3>
+                <p className="text-gray-600">{date}</p>
+                <p className="mt-2 text-lg font-bold text-gray-400">{priceTag}</p>
                 {id && (
                     <button className="button mt-3 px-4 py-1 rounded-md text-[#F9F7F7]">Book</button>
                 )}
@@ -71,7 +57,6 @@ const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
 
 const CardComponent = async () => {
     const events = await fetchData()
-
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 p-16">
             {events.map((event: IEvent) => (
