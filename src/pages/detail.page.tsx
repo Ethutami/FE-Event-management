@@ -5,7 +5,6 @@ import { IEvent, } from "@/interfaces/events.intervace";
 import formatDate from "@/components/dateformater";
 import VoucherCard from "@/components/voucher.component";
 import ReviewCard from "@/components/reviewCard.componet";
-import { IReview } from "@/interfaces/review.interface";
 import { IUsers } from "@/interfaces/user.interface";
 
 const CardTitle = (
@@ -77,7 +76,6 @@ const BasicInfo = (
 
 const DetailPage = () => {
     const [data, setData] = useState<IEvent>()
-    const [reviews, setReviews] = useState<IReview[]>([])
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -93,19 +91,6 @@ const DetailPage = () => {
                 setLoading(false)
             })
     }, [data])
-    useEffect(() => {
-        fetch('http://localhost:8000/api/review/event/65', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setReviews(data?.data)
-                setLoading(false)
-            })
-    }, [])
 
     if (isLoading) return <p>Loading...</p>
     if (!data) return <p>No profile data</p>
@@ -120,7 +105,7 @@ const DetailPage = () => {
             <VoucherCard />
             <CardTitle name={name} price={price} users={users} date={date} />
             <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} />
-            <ReviewCard params={reviews ?? []} />
+            <ReviewCard />
         </div>
     )
 }
