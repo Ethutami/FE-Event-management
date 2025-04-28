@@ -1,3 +1,4 @@
+import { IUsers } from "./user.interface";
 export interface IEvent {
     id: number;
     organizer_id: number;
@@ -9,7 +10,8 @@ export interface IEvent {
     end_date: string;
     total_seats: number;
     remaining_seats: number;
-    price: string | number; // String to handle decimal values or formatted prices
+    price: string; // String to handle decimal values or formatted prices
     created_at: string;
     path: string;
+    users: IUsers
 }
