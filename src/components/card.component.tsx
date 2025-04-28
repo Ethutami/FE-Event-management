@@ -28,7 +28,7 @@ async function fetchData() {
 const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
     console.log(start_date);
 
-    const date = formatDate(start_date, false, true)
+    const date = formatDate(start_date, false, true, false)
     const priceTag = Number(price) != 0 ? `Rp.${price}` : 'Free'
 
     return (

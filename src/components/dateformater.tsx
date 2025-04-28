@@ -1,9 +1,13 @@
 const formatDate = (
     dateString: string,
     includeWeekday: boolean = false,
-    includeTime: boolean = false
+    includeTime: boolean = false,
+    onlyTime: boolean = false
 ) => {
     const date = new Date(dateString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    let formattedDate = ''
 
     const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
@@ -11,15 +15,17 @@ const formatDate = (
         day: 'numeric',
     };
 
+    if (onlyTime) {
+        formattedDate = ` | ${hours}:${minutes}`
+    }
+
     if (includeWeekday) {
         options.weekday = 'long';
     }
 
-    let formattedDate = date.toLocaleDateString('id-ID', options);
+    formattedDate = date.toLocaleDateString('id-ID', options);
 
     if (includeTime) {
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
         formattedDate += ` | ${hours}:${minutes}`;
     }
 
