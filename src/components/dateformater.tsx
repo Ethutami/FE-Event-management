@@ -16,7 +16,7 @@ const formatDate = (
     };
 
     if (onlyTime) {
-        formattedDate = ` | ${hours}:${minutes}`
+        return formattedDate = `${hours}:${minutes}`
     }
 
     if (includeWeekday) {
