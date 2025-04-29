@@ -32,12 +32,12 @@ export const ImageSlider = () => {
     }, []);
 
     return (
-        <div className="flex flex-col md:flex-row w-full mx-auto m-8 lg:m-16 items-center justify-around">
+        <div className="flex flex-col md:flex-row w-full mx-auto m-8 items-center justify-around">
             <button onClick={prevSlide} className="hidden md:flex mb-4 md:mb-0">
                 <ChevronLeft className="text-gray-400" size={32} />
             </button>
-            <div className="flex flex-col items-center justify-center relative w-full md:w-4/6 lg:w-3/6">
-                <div className="flex items-center justify-center w-full">
+            <div className="relative flex flex-col items-center justify-center p-4 ">
+                <div className="flex items-center justify-center">
                     <Image
                         src={imageslides[currentIndex].image}
                         alt={`Slider Image ${currentIndex + 1}`}

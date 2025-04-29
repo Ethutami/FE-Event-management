@@ -49,6 +49,10 @@
     width: 80px;
     height: 80px;
   }
+
+  .image {
+    object-fit: contain;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -65,8 +69,9 @@
   }
 
   .image {
-    width: 80%;
+    width: 100%;
     height: auto;
+    object-fit: contain;
   }
 }
 
