@@ -25,28 +25,25 @@ async function fetchData() {
 const CategoryChips = async () => {
     const categories = await fetchData()
     return (
-        <section className="min-h-screen flex flex-col items-center justify-center p-6">
-            <div className="text-center  mx-auto">
-                <h1 className="text-5xl font-bold mb-12">Category</h1>
-
-                <div className="flex flex-wrap justify-center ">
+        <section className="w-full p-6">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 text-center min-[700px]:text-left">Category</h1>
+            <div className="hidden min-[700px]:block w-26 h-2 bg-[#0D2B50] rounded-full min-[700px]:ml-0 mx-auto"></div>
+            <div className="overflow-x-auto">
+                <div className="flex gap-4 px-4 py-2 w-max">
                     {categories.map((category: ICategory, index: number) => (
-
-                        <button
+                        <div
                             key={index}
-                            className="flex flex-col items-center justify-center m-8"
+                            className="flex flex-col items-center min-w-[60px] text-center m-8 max-[500px]:m-1"
                         >
                             <Image
                                 src={category.path}
                                 alt={category.category}
-                                className="object-cover flex items-center justify-center w-32 h-32 sm:w-30 sm:h-30 md:w-30 md:h-30 rounded-full"
-                                width={100}
-                                height={100}
+                                width={40}
+                                height={40}
+                                className="custom-size object-cover flex items-center justify-center w-30 h-30 rounded-full"
                             />
-                            <span className="font-medium text-center py-6">
-                                {category?.category}
-                            </span>
-                        </button>
+                            <span className="text-sm">{category.category}</span>
+                        </div>
                     ))}
                 </div>
             </div>
