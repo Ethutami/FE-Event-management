@@ -41,8 +41,7 @@ export const ImageSlider = () => {
                     <Image
                         src={imageslides[currentIndex].image}
                         alt={`Slider Image ${currentIndex + 1}`}
-                        className="object-contain rounded-md responsive-image"
-                        style={{ width: "80%", height: "auto" }}
+                        className="object-contain rounded-md image"
                         width={800}
                         height={800}
                     />
