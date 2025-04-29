@@ -53,12 +53,29 @@
   .image {
     object-fit: contain;
   }
+
+  .single-grid {
+    grid-template-columns: 1fr !important;
+  }
+
 }
 
 @media (min-width: 1440px) {
   .custom-size {
     width: 32;
     height: 32;
+  }
+
+  .review-card {
+    max-width: 650px
+  }
+
+  .left-align {
+    justify-self: start;
+  }
+
+  .right-align {
+    justify-self: end;
   }
 }
 
@@ -72,6 +89,10 @@
     width: 100%;
     height: auto;
     object-fit: contain;
+  }
+
+  .single-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
