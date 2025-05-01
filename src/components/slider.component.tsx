@@ -47,6 +47,7 @@ export const ImageSlider = () => {
                         style={{ width: "100%", height: "auto" }}
                         width={800}
                         height={800}
+                        priority
                     />
                 </div>
                 <div className="flex justify-center mt-4 space-x-2">
