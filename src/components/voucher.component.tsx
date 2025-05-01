@@ -6,7 +6,7 @@ const VoucherCard = () => {
     const [showModal, setShowModal] = useState(false);
     const [voucher, setVoucher] = useState<IVoucher>()
     useEffect(() => {
-        fetch('http://localhost:8000/api/voucher/event/65', {
+        fetch('http://localhost:8080/api/voucher/event/65', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

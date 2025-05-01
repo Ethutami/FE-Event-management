@@ -79,7 +79,7 @@ const DetailPage = () => {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/event/detail/65', {
+        fetch('http://localhost:8080/api/event/detail/65', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

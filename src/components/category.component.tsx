@@ -2,7 +2,7 @@ import Image from "next/image";
 
 async function fetchData() {
     try {
-        const response = await fetch('http://localhost:8000/api/event/categories', {
+        const response = await fetch('http://localhost:8080/api/event/categories', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
