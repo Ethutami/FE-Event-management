@@ -23,7 +23,7 @@ const VoucherModal: React.FC<IVoucherModalProps> = ({ isOpen, onClose, data }) =
                 </button>
                 <div className='flex flex-row justify-between items-start'>
                     <div>
-                        <h2 className="text-2xl font-bold mb-2">{data?.name}</h2>
+                        <h2 className="text-2xl font-bold mb-2 text-[#112D4E]">{data?.name}</h2>
                         <p className="text-gray-500 text-sm mb-6">{data?.description}</p>
                     </div>
                     <div className="flex justify-end ">
@@ -35,7 +35,7 @@ const VoucherModal: React.FC<IVoucherModalProps> = ({ isOpen, onClose, data }) =
                         </div>
                     </div>
                 </div>
-                <h3 className="text-lg font-semibold mb-3">Terms & Conditions</h3>
+                <h3 className="text-lg font-semibold mb-3 text-[#112D4E]">Terms & Conditions</h3>
                 <div className="text-sm text-gray-600 leading-relaxed max-h-[300px] overflow-y-auto px-2 mb-6">
                     <p className="mb-2">{data?.tnc_description}</p>
                 </div>

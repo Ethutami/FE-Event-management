@@ -57,10 +57,10 @@ const VoucherCard = () => {
             </div>
 
             <div className="block md:hidden lg:hidden ml-2 w-1/3 min-w-[110px] rounded-[16px] bg-[#F9F7F7] shadow-md  overflow-hidden relative mt-10">
-                <div className="bg-[#112D4E] text-[#FBBC05] text-xs font-bold py-3 text-center relative">
+                <div className="bg-[#112D4E] dark:bg-[#FBBC05] text-[#FBBC05] dark:text-[#112D4E] text-xs font-bold py-3 text-center relative">
                     FINFIRST25
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#F9F7F7] rounded-full -ml-2" />
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#F9F7F7] rounded-full -mr-2" />
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#F9F7F7] dark:bg-[#000] rounded-full -ml-2" />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-[#F9F7F7] dark:bg-[#000] rounded-full -mr-2" />
                 </div>
                 <div className="px-2 py-2">
                     <p className="text-[11px] text-gray-500 mt-1 leading-tight">

@@ -54,7 +54,7 @@ const ReviewCard = () => {
                                     height={100}
                                 />
                                 <div>
-                                    <h4 className="font-bold">{userName}</h4>
+                                    <h4 className="font-bold dark:text-[#112D4E] ">{userName}</h4>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@ const ReviewCard = () => {
                                     height={100}
                                 />
                                 <div>
-                                    <h4 className="font-bold">{userName}</h4>
+                                    <h4 className="font-bold dark:text-[#3F72AF]">{userName}</h4>
                                     <div className="flex space-x-1">
                                         {Array.from({ length: review?.rating }, (_, index) => (
                                             <span key={index}>⭐</span>

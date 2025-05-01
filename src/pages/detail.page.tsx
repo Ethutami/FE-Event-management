@@ -21,7 +21,7 @@ const CardTitle = (
                 <p className="text-[#3F72AF] text-lg">{`Hosted by ${users.first_name} ${users.last_name}`}</p>
             </div>
             <div className="hidden md:block lg:block bg-[#DBE2EF] p-3 rounded-lg text-center">
-                <div className="text-xl text-orange-500 font-semibold mb-2">{`Rp. ${price}`}</div>
+                <div className="text-xl text-[#FBBC05] font-semibold mb-2">{`Rp. ${price}`}</div>
                 <button className="bg-blue-900 text-2xl text-[#F9F7F7] px-4 py-1 rounded-md">
                     Buy Ticket
                 </button>
@@ -79,9 +79,9 @@ const BasicInfo = (
                     <section className="mb-10">
                         <h2 className="text-xl font-semibold mb-4">
                             Description
-                            <div className="h-[4px] w-10 bg-[#112D4E] rounded-lg"></div>
+                            <div className="h-[4px] w-10 bg-[#112D4E] dark:bg-[#FBBC05] rounded-lg"></div>
                         </h2>
-                        <p className="text-gray-700 text-sm leading-relaxed">{description}</p>
+                        <p className="text-gray-700 dark:text-white text-sm leading-relaxed">{description}</p>
                     </section>
                     <div className="space-y-6">
                         <div className="flex items-start gap-3">
@@ -114,7 +114,7 @@ const BasicInfo = (
                         </div>
                     </div>
                 </section>
-                <button className="bg-[#0D2B50] text-white px-10  py-2 rounded-lg font-semibold hover:bg-[#0b2242] transition">
+                <button className="bg-[#112D4E] dark:bg-[#FBBC05] text-white px-10  py-2 rounded-lg font-semibold hover:bg-[#0b2242] transition">
                     Buy Tickets
                 </button>
             </div>
