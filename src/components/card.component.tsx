@@ -32,7 +32,7 @@ const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
     const priceTag = Number(price) != 0 ? `Rp.${price}` : 'Free'
 
     return (
-        <div className="bg-white rounded-2xl shadow-md overflow-hidden w-full max-w-xs">
+        <div className="bg-[#DBE2EF] rounded-2xl shadow-md overflow-hidden w-full max-w-xs">
             <div className="relative h-40 w-full">
                 <Image
                     src={path || '/no-image.png'}
@@ -43,10 +43,10 @@ const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
                     sizes="(max-width: 768px) 100vw, 25vw"
                 />
             </div>
-            <div className="p-4 bg-blue-50 text-sm">
-                <h3 className="font-semibold text-gray-400 mb-1">{name}</h3>
+            <div className="p-4 text-sm">
+                <h3 className="font-semibold mb-1">{name}</h3>
                 <p className="text-gray-600">{date}</p>
-                <p className="mt-2 text-lg font-bold text-gray-400">{priceTag}</p>
+                <p className="mt-2 text-lg font-bold text-[#FBBC05]">{priceTag}</p>
                 {id && (
                     <button className="button mt-3 px-4 py-1 rounded-md text-[#F9F7F7]">Book</button>
                 )}

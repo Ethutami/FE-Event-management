@@ -1,8 +1,8 @@
 const formatDate = (
     dateString: string,
-    includeWeekday: boolean = false,
-    includeTime: boolean = false,
-    onlyTime: boolean = false
+    includeWeekday: boolean = false, // minggu, 20 april 2025
+    includeTime: boolean = false, // 20 april 2025 | 12:00
+    onlyTime: boolean = false // 12:00
 ) => {
     const date = new Date(dateString);
     const hours = date.getHours().toString().padStart(2, '0');
@@ -16,7 +16,7 @@ const formatDate = (
     };
 
     if (onlyTime) {
-        formattedDate = ` | ${hours}:${minutes}`
+        return formattedDate = `${hours}:${minutes}`
     }
 
     if (includeWeekday) {
@@ -33,8 +33,3 @@ const formatDate = (
 };
 
 export default formatDate
-
-
-// day, ddmmmmyyyy
-// ddmmmmyyyy | tt:mm
-//day, ddmmmmyyyy | tt:mm
