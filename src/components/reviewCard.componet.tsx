@@ -8,7 +8,7 @@ const ReviewCard = () => {
     const [reviews, setReviews] = useState<IReview[]>([])
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/review/event/65', {
+        fetch('http://localhost:8080/api/review/event/65', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
