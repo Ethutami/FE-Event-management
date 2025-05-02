@@ -1,33 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
-import { IEvent } from "@/interfaces/events.intervace";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchEvents } from "@/store/slice/eventSlice";
+import { IEvent } from "@/interfaces/events.interface";
 import formatDate from "./dateformater";
 
-async function fetchData() {
-    try {
-        const response = await fetch('http://localhost:8080/api/event/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data?.data;
-
-    } catch (error) {
-        console.log('Error fetching data:', error);
-        throw error;
-    }
-}
-
 const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
-    console.log(start_date);
-
     const date = formatDate(start_date, false, true, false)
     const priceTag = Number(price) != 0 ? `Rp.${price}` : 'Free'
 
@@ -55,12 +33,23 @@ const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
     )
 };
 
-const CardComponent = async () => {
-    const events = await fetchData()
+const CardComponent = () => {
+    const dispatch = useAppDispatch()
+    const { events, loading, error } = useAppSelector((state) => state?.eventReducers)
+
+    useEffect(() => {
+        dispatch(fetchEvents())
+    }, [dispatch])
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (error) {
+        return <p style={{ color: 'red' }}>{error}</p>
+    }
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 p-16">
             {events.map((event: IEvent) => (
-                <EventCard key={event.id} {...event} id={event.id} />
+                <EventCard key={event?.id} {...event} id={event?.id} />
             ))}
         </div>
     );
