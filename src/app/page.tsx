@@ -1,6 +1,5 @@
-import LoginPage from "@/pages/login.page";
-import RegisterPage from "@/pages/register.page";
-
+import LoginPage from "@/pages/login";
+import RegisterPage from "@/pages/register";
 
 export default function Home() {
   return (
