@@ -22,16 +22,17 @@ export default function RegisterForm() {
   const register = async (values: IRegister) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:7001/user?email=${values.email}`
+        `http://localhost:8080/users?email=${values.email}`
       );
+      console.log(data);
+      
+      if (data) throw new Error("Email sudah terdaftar");
 
-      if (data.length > 0) throw new Error("Email sudah terdaftar");
-
-      await axios.post("http://localhost:7001/user", values);
+      await axios.post("http://localhost:8080/auth/register", values);
 
       alert("Register Success");
 
-      router.push("/login");
+      router.push("/main");
     } catch (err) {
       alert((err as any).message);
     }
@@ -101,7 +102,7 @@ export default function RegisterForm() {
                   name="referral_code"
                   onChange={handleChange}
                   value={values.referral_code}
-                  placeholder="Referral Code"
+                  placeholder="Referral Code (optional)"
                   className="w-full p-4 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#DBE2EF] placeholder-[#DBE2EF]"
                 />
                 {touched.referral_code && errors.referral_code ? (

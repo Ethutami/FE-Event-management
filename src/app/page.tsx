@@ -1,8 +1,7 @@
-import LoginPage from "@/pages/login";
+import LandingPage from "@/pages/landing-page";
 
 export default function Home() {
   return (
-    // must be a landing page that shows events that available to attend
-    <LoginPage />
+    <LandingPage/>
   );
 }

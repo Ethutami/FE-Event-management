@@ -1,33 +1,51 @@
-"use client";
+"use client"
 
-import Link from "next/link";
 import { Formik, Form, Field, FormikProps } from "formik";
+import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import RegisterSchema from "./schema";
+import sign from "jwt-encode";
+import { setCookie } from "cookies-next";
+
+import LoginSchema from "./schema";
 import ILogin from "./type";
+import { onLogin } from "@/lib/redux/features/authSlice";
+import { useAppDispatch } from "@/lib/redux/hooks";
 
 export default function LoginForm() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const initialValues: ILogin = {
     email: "",
     password: "",
   };
 
-  const register = async (values: ILogin) => {
+  const login = async (values: ILogin) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:7001/user?email=${values.email}`
+        `http://localhost:8080/auth/login?email=${values.email}&password=${values.password}`
       );
 
-      if (data.length > 0) throw new Error("Email sudah terdaftar");
+      if (data.length === 0) throw new Error("Email atau Password salah");
 
-      await axios.post("http://localhost:7001/user", values);
+      const stateUser = {
+        user: {
+          email: data[0].email,
+          firstname: data[0].firstname,
+          lastname: data[0].lastname,
+        },
+        isLogin: true,
+      };
 
-      alert("Register Success");
+      const token = sign(stateUser, "test");
 
-      router.push("/login");
+      setCookie("access_token", token);
+      dispatch(onLogin(stateUser));
+
+      alert("Login Success");
+      router.push("/main");
     } catch (err) {
       alert((err as any).message);
     }
@@ -37,9 +55,9 @@ export default function LoginForm() {
     <div>
       <Formik
         initialValues={initialValues}
-        validationSchema={RegisterSchema}
+        validationSchema={LoginSchema}
         onSubmit={(values, { resetForm }) => {
-          register(values);
+          login(values);
           resetForm();
         }}
       >
