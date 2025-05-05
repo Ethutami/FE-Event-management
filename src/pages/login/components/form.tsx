@@ -36,8 +36,8 @@ export default function LoginForm() {
       const stateUser = {
         user: {
           email: user.email,
-          firstname: user.first_name,
-          lastname: user.last_name,
+          first_name: user.first_name,
+          last_name: user.last_name,
           role: user.role,
         },
         isLogin: true,

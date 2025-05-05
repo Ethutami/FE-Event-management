@@ -1,22 +1,11 @@
+import { IAuth } from "@/interfaces/auth.interface";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface IUser {
-  email: string;
-  firstname: string;
-  lastname: string;
-  role: string;
-}
-
-export interface IAuth {
-  user: IUser;
-  isLogin: boolean;
-}
 
 const initialState: IAuth = {
   user: {
     email: "",
-    firstname: "",
-    lastname: "",
+    first_name: "",
+    last_name: "",
     role: "",
   },
   isLogin: false,
@@ -28,15 +17,15 @@ export const authSlice = createSlice({
   reducers: {
     onLogin: (state: IAuth, action: PayloadAction<IAuth>) => {
       state.user.email = action.payload.user.email;
-      state.user.firstname = action.payload.user.firstname;
-      state.user.lastname = action.payload.user.lastname;
+      state.user.first_name = action.payload.user.first_name;
+      state.user.last_name = action.payload.user.last_name;
       state.user.role = action.payload.user.role;
       state.isLogin = true;
     },
     onLogout: (state: IAuth) => {
       state.user.email = "";
-      state.user.firstname = "";
-      state.user.lastname = "";
+      state.user.first_name = "";
+      state.user.last_name = "";
       state.user.role = "";
       state.isLogin = false;
     },

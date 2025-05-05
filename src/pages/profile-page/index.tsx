@@ -3,13 +3,14 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 
-import { onLogin } from "@/lib/redux/features/authSlice";
+import { onLogin, onLogout } from "@/lib/redux/features/authSlice";
 import { getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import { IAuth } from "@/interfaces/auth.interface";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-export default function MainPage() {
+export default function ProfilePage() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   // Retrieve user data from the cookie on component mount
@@ -33,18 +34,25 @@ export default function MainPage() {
   // Access the user state from the Redux store using the custom hook
   const user = useAppSelector((state) => state.auth.user);
 
+  const handleOnClick = () => {
+    dispatch(onLogout());
+    router.push("/");
+  };
+
   return (
     <div className="bg-[#F9F7F7] p-8 rounded-lg shadow-md w-[500px] max-w-md m-auto">
       <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
-        Welcome, {user.first_name} {user.last_name}!
+        {user.first_name}
       </h1>
-      <Link href="/profile">
-        <img
-          src=""
-          alt="profile-avatar"
-          className="w-[50px] h-[50px] bg-blue-900"
-        />
-      </Link>
+      <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
+        {user.last_name}
+      </h1>
+      <button
+        onClick={handleOnClick}
+        className="w-full p-4 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]"
+      >
+        Logout
+      </button>
     </div>
   );
 }
