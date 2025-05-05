@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 
 import { onLogin, onLogout } from "@/lib/redux/features/authSlice";
-import { getCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import { IAuth } from "@/interfaces/auth.interface";
 import { useRouter } from "next/navigation";
@@ -35,6 +35,7 @@ export default function ProfilePage() {
   const user = useAppSelector((state) => state.auth.user);
 
   const handleOnClick = () => {
+    deleteCookie("access_token");
     dispatch(onLogout());
     router.push("/");
   };

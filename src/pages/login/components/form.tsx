@@ -49,7 +49,12 @@ export default function LoginForm() {
       dispatch(onLogin(stateUser));
 
       alert("Login Success");
-      router.push("/main");
+
+      if (user.role === "customer") {
+        router.push("/main");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err) {
       alert((err as any).message);
     }

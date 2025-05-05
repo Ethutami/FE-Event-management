@@ -26,14 +26,14 @@ export default function RegisterForm() {
       );
 
       const user = data.data;
-      
+
       if (user) throw new Error("Email sudah terdaftar");
 
       await axios.post("http://localhost:8080/auth/register", values);
 
       alert("Register Success");
 
-      router.push("/main");
+      router.push("/signin");
     } catch (err) {
       alert((err as any).message);
     }
