@@ -24,9 +24,10 @@ export default function RegisterForm() {
       const { data } = await axios.get(
         `http://localhost:8080/users?email=${values.email}`
       );
-      console.log(data);
+
+      const user = data.data;
       
-      if (data) throw new Error("Email sudah terdaftar");
+      if (user) throw new Error("Email sudah terdaftar");
 
       await axios.post("http://localhost:8080/auth/register", values);
 

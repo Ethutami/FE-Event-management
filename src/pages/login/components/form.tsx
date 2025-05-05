@@ -24,17 +24,21 @@ export default function LoginForm() {
 
   const login = async (values: ILogin) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:8080/auth/login?email=${values.email}&password=${values.password}`
-      );
+      const { data } = await axios.post("http://localhost:8080/auth/login", {
+        email: values.email,
+        password: values.password,
+      });
 
-      if (data.length === 0) throw new Error("Email atau Password salah");
+      const { user } = data.data;
+
+      console.log(user.email);
 
       const stateUser = {
         user: {
-          email: data[0].email,
-          firstname: data[0].firstname,
-          lastname: data[0].lastname,
+          email: user.email,
+          firstname: user.first_name,
+          lastname: user.last_name,
+          role: user.role,
         },
         isLogin: true,
       };
