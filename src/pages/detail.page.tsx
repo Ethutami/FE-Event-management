@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import Image from "next/image"
-import { IEvent, } from "@/interfaces/events.intervace";
+import { IEvent, } from "@/interfaces/events.interface";
 import formatDate from "@/components/dateformater";
 import VoucherCard from "@/components/voucher.component";
 import ReviewCard from "@/components/reviewCard.componet";

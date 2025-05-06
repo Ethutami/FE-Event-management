@@ -1,3 +1,4 @@
+"use client"
 import { ImageSlider } from "@/components/slider.component"
 import CategoryChips from '@/components/category.component';
 import CardComponent from "@/components/card.component";
@@ -10,15 +11,12 @@ const HeroSection = () => {
     )
 }
 
-const CategorySection = async () => <CategoryChips />
-
 export default function LandingPage() {
     return (
         <div>
             <HeroSection />
-            <CategorySection />
+            <CategoryChips />
             <CardComponent />
         </div>
     )
-
 }
