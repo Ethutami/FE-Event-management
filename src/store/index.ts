@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import categoryReducer from './slice/categorySlice'
+import categoryReducers from './slice/categorySlice'
+import eventReducers from './slice/eventSlice'
+import eventsearchParamsReducers from './slice/eventSearchSlice'
 
 export const store = configureStore({
     reducer: {
-        category: categoryReducer,
+        categoryReducers,
+        eventReducers,
+        eventsearchParamsReducers,
     },
 })
 

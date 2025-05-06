@@ -15,3 +15,8 @@ export interface IEvent {
     path: string;
     users: IUsers
 }
+export interface IEventsState {
+    events: IEvent[]
+    loading: boolean
+    error: string | null
+}
