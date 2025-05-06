@@ -8,5 +8,4 @@ export interface ICategoryState {
     categories: ICategory[]
     loading: boolean
     error: string | null
-    selectedCategoryId: number | null;
 }

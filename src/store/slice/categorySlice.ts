@@ -1,11 +1,10 @@
 import { ICategoryState } from '@/interfaces/category.interface'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, } from '@reduxjs/toolkit'
 
 const initialState: ICategoryState = {
     categories: [],
     loading: false,
     error: null,
-    selectedCategoryId: null,
 }
 
 async function fetchData() {
@@ -34,6 +33,7 @@ export const fetchCategories = createAsyncThunk(
         try {
             const data = await fetchData()
             return data
+
         } catch (error: unknown) {
             if (error instanceof Error) {
                 return thunkAPI.rejectWithValue(error.message || 'Something went wrong')
@@ -46,11 +46,7 @@ export const fetchCategories = createAsyncThunk(
 const categorySlice = createSlice({
     name: 'categoryReducers',
     initialState,
-    reducers: {
-        setSelectedCategoryId(state, action: PayloadAction<number>) {
-            state.selectedCategoryId = action.payload;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchCategories.pending, (state) => {
@@ -68,5 +64,4 @@ const categorySlice = createSlice({
     },
 })
 
-export const { setSelectedCategoryId } = categorySlice.actions;
 export default categorySlice.reducer
