@@ -3,7 +3,8 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ICategory } from "@/interfaces/category.interface";
-import { fetchCategories, setSelectedCategoryId } from "@/store/slice/categorySlice";
+import { fetchCategories, } from "@/store/slice/categorySlice";
+import { fetchEventSearch } from "@/store/slice/eventSearchSlice";
 
 const CategoryChips = () => {
     const dispatch = useAppDispatch()
@@ -14,7 +15,7 @@ const CategoryChips = () => {
     }, [dispatch])
 
     const handleCategoryClick = (categoryId: number) => {
-        dispatch(setSelectedCategoryId(categoryId));
+        dispatch(fetchEventSearch(categoryId));
     };
     if (loading) {
         return <div>Loading...</div>;

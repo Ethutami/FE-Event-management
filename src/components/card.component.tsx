@@ -35,7 +35,24 @@ const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
 
 const CardComponent = () => {
     const dispatch = useAppDispatch()
-    const { events, loading, error } = useAppSelector((state) => state?.eventReducers)
+    const {
+        events: defaultEvents,
+        loading: defaultLoading,
+        error: defaultError,
+    } = useAppSelector((state) => state?.eventReducers);
+
+    const {
+        events: searchEvents,
+        loading: searchLoading,
+        error: searchError,
+    } = useAppSelector((state) => state?.eventsearchParamsReducers);
+
+    const isSearching = searchEvents?.length > 0;
+
+    const events = isSearching ? searchEvents : defaultEvents;
+    const loading = isSearching ? searchLoading : defaultLoading;
+    const error = isSearching ? searchError : defaultError;
+
 
     useEffect(() => {
         dispatch(fetchEvents())
