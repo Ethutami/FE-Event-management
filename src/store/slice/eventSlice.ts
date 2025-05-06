@@ -1,5 +1,8 @@
-import { IEventsState } from "@/interfaces/events.interface";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { IEventsState } from "@/interfaces/events.interface";
+import { eventApiService } from "@/services/eventApiService";
+
+const api = eventApiService()
 
 const initialState: IEventsState = {
     events: [],
@@ -7,33 +10,11 @@ const initialState: IEventsState = {
     error: null,
 }
 
-async function fetchData() {
-    try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data?.data;
-
-    } catch (error) {
-        console.log('Error fetching data:', error);
-        throw error;
-    }
-}
-
 export const fetchEvents = createAsyncThunk(
     'eventReducers/fetchevents',
     async (_, thunkAPI) => {
         try {
-            const data = await fetchData()
+            const data = await api.fetchEvents()
             return data
         } catch (error: unknown) {
             if (error instanceof Error) {

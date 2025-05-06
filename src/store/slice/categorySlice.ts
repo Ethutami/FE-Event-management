@@ -1,5 +1,8 @@
-import { ICategoryState } from '@/interfaces/category.interface'
 import { createAsyncThunk, createSlice, } from '@reduxjs/toolkit'
+import { ICategoryState } from '@/interfaces/category.interface'
+import { eventApiService } from '@/services/eventApiService';
+
+const api = eventApiService()
 
 const initialState: ICategoryState = {
     categories: [],
@@ -7,31 +10,11 @@ const initialState: ICategoryState = {
     error: null,
 }
 
-async function fetchData() {
-    try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/categories`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
-        }
-
-        const data = await response.json()
-        return data?.data
-    } catch (error) {
-        console.log('Error fetching data:', error)
-        throw error
-    }
-}
-
 export const fetchCategories = createAsyncThunk(
     'categoryReducers/fetchCategories',
     async (_, thunkAPI) => {
         try {
-            const data = await fetchData()
+            const data = await await api.fetchCategories()
             return data
 
         } catch (error: unknown) {
