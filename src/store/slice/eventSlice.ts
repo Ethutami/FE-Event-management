@@ -9,7 +9,7 @@ const initialState: IEventsState = {
 
 async function fetchData() {
     try {
-        const response = await fetch('http://localhost:8080/api/event/', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

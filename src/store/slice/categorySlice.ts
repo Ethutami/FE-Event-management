@@ -9,7 +9,7 @@ const initialState: ICategoryState = {
 
 async function fetchData() {
     try {
-        const response = await fetch('http://localhost:8080/api/event/categories', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/categories`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
