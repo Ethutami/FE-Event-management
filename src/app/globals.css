@@ -88,12 +88,6 @@
   .right-align {
     justify-self: end;
   }
-
-  .image {
-    width: auto;
-    height: auto;
-  }
-
 }
 
 @media (max-width: 500px) {
