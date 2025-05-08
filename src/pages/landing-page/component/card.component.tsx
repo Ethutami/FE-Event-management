@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actionEvents } from "@/store/slice/eventSlice";
 import { IEvent } from "@/interfaces/events.interface";
-import formatDate from "./dateformater";
+import formatDate from "../../../components/dateformater";
 
 const EventCard = ({ name, start_date, price, path, id, }: IEvent) => {
     const date = formatDate(start_date, false, true, false)

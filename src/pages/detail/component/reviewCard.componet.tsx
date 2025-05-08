@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { reviewApiService } from "@/services/reviewApiService";
 import { IReview } from "@/interfaces/review.interface";
-import formatDate from "./dateformater";
+import formatDate from "../../../components/dateformater";
 
 const ReviewCard = () => {
     const [reviews, setReviews] = useState<IReview[]>([])

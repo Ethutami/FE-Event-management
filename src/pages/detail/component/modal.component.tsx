@@ -1,6 +1,6 @@
 import React from 'react';
 import { IVoucherModalProps } from '@/interfaces/voucher.interface';
-import formatDate from './dateformater';
+import formatDate from '../../../components/dateformater';
 
 const VoucherModal: React.FC<IVoucherModalProps> = ({ isOpen, onClose, data }) => {
     if (!isOpen) return null;

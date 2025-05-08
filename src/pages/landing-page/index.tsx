@@ -1,22 +1,22 @@
 "use client"
-import { ImageSlider } from "@/components/slider.component"
-import CategoryChips from '@/components/category.component';
-import CardComponent from "@/components/card.component";
+import { ImageSlider } from "@/pages/landing-page/component/slider.component"
+import CategoryChips from '@/pages/landing-page/component/category.component';
+import CardComponent from "@/pages/landing-page/component/card.component";
 
 const HeroSection = () => {
-    return (
-        <div className="flex w-full bg-[#112D4E] dark:bg-[#F9F7F7]">
-            <ImageSlider />
-        </div>
-    )
+  return (
+    <div className="flex w-full bg-[#112D4E] dark:bg-[#F9F7F7]">
+      <ImageSlider />
+    </div>
+  )
 }
 
 export default function LandingPage() {
-    return (
-        <div>
-            <HeroSection />
-            <CategoryChips />
-            <CardComponent />
-        </div>
-    )
+  return (
+    <div>
+      <HeroSection />
+      <CategoryChips />
+      <CardComponent />
+    </div>
+  )
 }

@@ -7,7 +7,7 @@ import { IUsers } from "@/interfaces/user.interface";
 import { IEvent } from "@/interfaces/events.interface";
 import formatDate from "@/components/dateformater";
 import VoucherCard from "@/components/voucher.component";
-import ReviewCard from "@/components/reviewCard.componet";
+import ReviewCard from "@/pages/detail/component/reviewCard.componet";
 
 const CardTitle = (
     { name, users, price, date }
