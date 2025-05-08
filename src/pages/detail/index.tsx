@@ -126,16 +126,16 @@ const BasicInfo = (
 
 const DetailPage = () => {
     const [data, setData] = useState<IEvent>()
-    const api = eventApiService()
     const param = useParams()
 
     useEffect(() => {
+        const api = eventApiService()
         async function fetchData() {
             const res = await api.fetchEventDetail(Number(param?.id))
             setData(res)
         }
         fetchData()
-    })
+    }, [param])
     if (data) {
         const { name, users, price, start_date, location, remaining_seats, description } = data;
         const date = formatDate(start_date, true, false, false)
@@ -144,7 +144,7 @@ const DetailPage = () => {
             <div>
                 {/* Versi untuk >=700px */}
                 <div className="hidden md:block lg:block px-16 pb-16">
-                    <Image src={data?.path || '/no-image.png'} alt="image" className="w-screen h-screen object-cover relative image " width={800} height={800} />
+                    <Image src={data?.path || '/no-image.png'} alt="image" className="w-screen h-screen object-cover relative image " width={800} height={800} priority />
                     <VoucherCard />
                     <CardTitle name={data?.name} price={price} users={users} date={date} />
                     <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
