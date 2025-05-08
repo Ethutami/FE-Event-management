@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { voucherApiService } from "@/services/voucherApiService";
 import { IVoucher } from "@/interfaces/voucher.interface";
 import VoucherModal from "./modal.component";
-import { useParams } from "next/navigation";
-import { eventApiService } from "@/services/eventApiService";
 
 const VoucherCard = () => {
     const [showModal, setShowModal] = useState(false);
@@ -10,7 +10,7 @@ const VoucherCard = () => {
     const param = useParams()
 
     useEffect(() => {
-        const api = eventApiService()
+        const api = voucherApiService()
         async function fetchData() {
             const res = await api.fetchEventVoucher(Number(param?.id))
             setVoucher(res)

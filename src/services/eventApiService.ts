@@ -81,30 +81,11 @@ const createApiService = () => {
             handleError(error);
         }
     }
-
-    async function fetchEventVoucher(eventId: number) {
-        try {
-            const url = `${BASE_URL}/voucher/event/${eventId}`;
-            const response = await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (response.ok) {
-                const data = await response.json();
-                return data?.data;
-            }
-        } catch (error) {
-            handleError(error);
-        }
-    }
     return {
         fetchCategories,
         fetchEvents,
         searchEvents,
         fetchEventDetail,
-        fetchEventVoucher,
     };
 };
 
