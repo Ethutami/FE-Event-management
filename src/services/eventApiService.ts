@@ -64,10 +64,29 @@ const createApiService = () => {
         }
     }
 
+    async function fetchEventDetail(eventId: number) {
+        try {
+            const url = `${BASE_URL}/event/detail/${eventId}`;
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            await checkResponse(response, 'Error searching events');
+
+            const data = await response.json();
+            return data?.data;
+        } catch (error) {
+            handleError(error, 'Error searching events');
+        }
+    }
+
     return {
         fetchCategories,
         fetchEvents,
         searchEvents,
+        fetchEventDetail,
     };
 };
 
