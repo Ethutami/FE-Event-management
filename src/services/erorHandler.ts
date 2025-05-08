@@ -1,15 +1,17 @@
-export const handleError = (error: unknown, context: string) => {
+export const handleError = (error: unknown) => {
     if (error instanceof Error) {
-        console.error(`${context}:`, error.message);
+        if (!error.message.includes("Voucher not found")) {
+            console.error(error.message);
+        }
     } else {
-        console.error(`${context}: Unknown error`);
+        console.error('Unknown error');
     }
-    throw error;
 };
 
-export const checkResponse = async (response: Response, context: string) => {
+export const checkResponse = async (response: Response) => {
     if (!response.ok) {
-        const errorMessage = `HTTP error! status: ${response.status}`;
-        handleError(new Error(errorMessage), context);
+        const errorText = await response.statusText;
+        handleError(new Error(`HTTP error ${response.status}: ${errorText}`));
+
     }
 };

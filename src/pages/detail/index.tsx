@@ -148,14 +148,14 @@ const DetailPage = () => {
                     <VoucherCard />
                     <CardTitle name={data?.name} price={price} users={users} date={date} />
                     <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
-                    <ReviewCard />
+                    {/* <ReviewCard /> */}
                 </div>
                 {/* Versi untuk <700px */}
                 <div className="block md:hidden lg:hidden px-2 pb-16">
                     <CardTitle name={name} price={price} users={users} date={date} />
                     <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
                     <VoucherCard />
-                    <ReviewCard />
+                    {/* <ReviewCard /> */}
                 </div>
             </div>
         )
