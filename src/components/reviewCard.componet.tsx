@@ -1,27 +1,26 @@
 'use client'
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import Image from "next/image";
+import { reviewApiService } from "@/services/reviewApiService";
 import { IReview } from "@/interfaces/review.interface";
 import formatDate from "./dateformater";
 
 const ReviewCard = () => {
     const [reviews, setReviews] = useState<IReview[]>([])
+    const param = useParams()
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/review/event/65', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setReviews(data?.data)
-            })
-    }, [])
+        const api = reviewApiService()
+        async function fetchData() {
+            const res = await api.fetchEventReview(Number(param?.id))
+            setReviews(res)
+        }
+        fetchData()
+    }, [param])
 
     if (!reviews || reviews.length === 0) {
-        return <div>There is no review yet</div>;
+        return <div className="mt-24 w-fit mx-auto p-6">There is no review yet</div>
     }
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 single-grid">
