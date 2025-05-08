@@ -61,6 +61,8 @@
 
   .image {
     object-fit: contain;
+    width: 100%;
+    height: auto;
   }
 
   .single-grid {
@@ -86,6 +88,12 @@
   .right-align {
     justify-self: end;
   }
+
+  .image {
+    width: auto;
+    height: auto;
+  }
+
 }
 
 @media (max-width: 500px) {
