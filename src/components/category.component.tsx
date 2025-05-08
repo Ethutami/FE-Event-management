@@ -3,19 +3,19 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { ICategory } from "@/interfaces/category.interface";
-import { fetchCategories, } from "@/store/slice/categorySlice";
-import { fetchEventSearch } from "@/store/slice/eventSearchSlice";
+import { actionCategories, } from "@/store/slice/categorySlice";
+import { actionEventSearch } from "@/store/slice/eventSearchSlice";
 
 const CategoryChips = () => {
     const dispatch = useAppDispatch()
     const { categories, loading, error } = useAppSelector((state) => state?.categoryReducers)
 
     useEffect(() => {
-        dispatch(fetchCategories())
+        dispatch(actionCategories())
     }, [dispatch])
 
     const handleCategoryClick = (categoryId: number) => {
-        dispatch(fetchEventSearch(categoryId));
+        dispatch(actionEventSearch(categoryId));
     };
     if (loading) {
         return <div>Loading...</div>;

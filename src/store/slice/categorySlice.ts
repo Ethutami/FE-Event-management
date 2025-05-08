@@ -10,8 +10,8 @@ const initialState: ICategoryState = {
     error: null,
 }
 
-export const fetchCategories = createAsyncThunk(
-    'categoryReducers/fetchCategories',
+export const actionCategories = createAsyncThunk(
+    'categoryReducers/eventCategories',
     async (_, thunkAPI) => {
         try {
             const data = await await api.fetchCategories()
@@ -32,15 +32,15 @@ const categorySlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchCategories.pending, (state) => {
+            .addCase(actionCategories.pending, (state) => {
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchCategories.fulfilled, (state, action) => {
+            .addCase(actionCategories.fulfilled, (state, action) => {
                 state.loading = false
                 state.categories = action.payload
             })
-            .addCase(fetchCategories.rejected, (state, action) => {
+            .addCase(actionCategories.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload as string
             })

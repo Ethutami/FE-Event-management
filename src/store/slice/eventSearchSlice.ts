@@ -10,8 +10,8 @@ const initialState: ISearchParamsState = {
     error: null
 }
 
-export const fetchEventSearch = createAsyncThunk(
-    'eventsearchParamsReducers/fetchEventSearch',
+export const actionEventSearch = createAsyncThunk(
+    'eventsearchParamsReducers/eventSearch',
     async (categoryId: number, thunkAPI) => {
         try {
             const data = await api.searchEvents({ category_id: categoryId });
@@ -31,15 +31,15 @@ const eventSearchSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchEventSearch.pending, (state) => {
+            .addCase(actionEventSearch.pending, (state) => {
                 state.loading = true
                 state.error = null
             })
-            .addCase(fetchEventSearch.fulfilled, (state, action) => {
+            .addCase(actionEventSearch.fulfilled, (state, action) => {
                 state.loading = false
                 state.events = action.payload
             })
-            .addCase(fetchEventSearch.rejected, (state, action) => {
+            .addCase(actionEventSearch.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload as string
             })

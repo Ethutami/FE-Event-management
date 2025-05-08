@@ -1,11 +1,13 @@
-'use client'
+"use client"
 import { useEffect, useState } from "react";
 import Image from "next/image"
-import { IEvent, } from "@/interfaces/events.interface";
+import { useParams } from "next/navigation";
+import { eventApiService } from "@/services/eventApiService";
+import { IUsers } from "@/interfaces/user.interface";
+import { IEvent } from "@/interfaces/events.interface";
 import formatDate from "@/components/dateformater";
 import VoucherCard from "@/components/voucher.component";
 import ReviewCard from "@/components/reviewCard.componet";
-import { IUsers } from "@/interfaces/user.interface";
 
 const CardTitle = (
     { name, users, price, date }
@@ -18,7 +20,7 @@ const CardTitle = (
             </div>
             <div>
                 <h3 className="text-3xl font-semibold text-[#112D4E]">{name}</h3>
-                <p className="text-[#3F72AF] text-lg">{`Hosted by ${users.first_name} ${users.last_name}`}</p>
+                <p className="text-[#3F72AF] text-lg">{`Hosted by ${users?.first_name} ${users?.last_name}`}</p>
             </div>
             <div className="hidden md:block lg:block bg-[#DBE2EF] p-3 rounded-lg text-center">
                 <div className="text-xl text-[#FBBC05] font-semibold mb-2">{`Rp. ${price}`}</div>
@@ -124,48 +126,43 @@ const BasicInfo = (
 
 const DetailPage = () => {
     const [data, setData] = useState<IEvent>()
-    const [isLoading, setLoading] = useState(true)
+    const api = eventApiService()
+    const param = useParams()
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/event/detail/65', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setData(data?.data)
-                setLoading(false)
-            })
-    }, [data])
-
-    if (isLoading) return <p>Loading...</p>
-    if (!data) return <p>No profile data</p>
-
-    const { name, users, price, start_date, location, remaining_seats, description } = data
-    const date = formatDate(start_date, true, false, false)
-    const time = formatDate(start_date, false, false, true)
-
-    return (
-        <div>
-            {/* Versi untuk >=700px */}
-            <div className="hidden md:block lg:block px-16 pb-16">
-                <Image src={data?.path} alt="image" className="w-screen h-screen object-cover relative image " width={800} height={800} />
-                <VoucherCard />
-                <CardTitle name={name} price={price} users={users} date={date} />
-                <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
-                <ReviewCard />
+        async function fetchData() {
+            const res = await api.fetchEventDetail(Number(param?.id))
+            setData(res)
+        }
+        fetchData()
+    })
+    if (data) {
+        const { name, users, price, start_date, location, remaining_seats, description } = data;
+        const date = formatDate(start_date, true, false, false)
+        const time = formatDate(start_date, false, false, true)
+        return (
+            <div>
+                {/* Versi untuk >=700px */}
+                <div className="hidden md:block lg:block px-16 pb-16">
+                    <Image src={data?.path || '/no-image.png'} alt="image" className="w-screen h-screen object-cover relative image " width={800} height={800} />
+                    <VoucherCard />
+                    <CardTitle name={data?.name} price={price} users={users} date={date} />
+                    <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
+                    <ReviewCard />
+                </div>
+                {/* Versi untuk <700px */}
+                <div className="block md:hidden lg:hidden px-2 pb-16">
+                    <CardTitle name={name} price={price} users={users} date={date} />
+                    <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
+                    <VoucherCard />
+                    <ReviewCard />
+                </div>
             </div>
-            {/* Versi untuk <700px */}
-            <div className="block md:hidden lg:hidden px-2 pb-16">
-                <CardTitle name={name} price={price} users={users} date={date} />
-                <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
-                <VoucherCard />
-                <ReviewCard />
-            </div>
-        </div>
-    )
+        )
+    } else {
+        <p>no data loaded </p>
+    }
+
 }
 
 export default DetailPage
