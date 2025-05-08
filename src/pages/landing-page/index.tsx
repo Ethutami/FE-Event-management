@@ -1,7 +1,8 @@
 "use client"
-import { ImageSlider } from "@/pages/landing-page/component/slider.component"
-import CategoryChips from '@/pages/landing-page/component/category.component';
-import CardComponent from "@/pages/landing-page/component/card.component";
+import CardComponent from "./component/card.component"
+import CategoryChips from "./component/category.component"
+import { ImageSlider } from "./component/slider.component"
+
 
 const HeroSection = () => {
   return (

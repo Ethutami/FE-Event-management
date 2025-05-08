@@ -6,8 +6,8 @@ import { eventApiService } from "@/services/eventApiService";
 import { IUsers } from "@/interfaces/user.interface";
 import { IEvent } from "@/interfaces/events.interface";
 import formatDate from "@/components/dateformater";
-import VoucherCard from "@/components/voucher.component";
 import ReviewCard from "@/pages/detail/component/reviewCard.componet";
+import VoucherCard from "./component/voucher.component";
 
 const CardTitle = (
     { name, users, price, date }
