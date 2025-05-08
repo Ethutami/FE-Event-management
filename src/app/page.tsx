@@ -1,7 +1,7 @@
-import LandingPage from "@/pages/landing-page";
+import EventOrganizerPage from "@/pages/organizer-event-page";
 
 export default function Home() {
   return (
-    <LandingPage />
+    <EventOrganizerPage />
   );
 }

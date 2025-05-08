@@ -27,8 +27,22 @@
   outline: none;
 }
 
+.inactive-button {
+  background-color: #fff;
+  border-color: #3F72AF;
+  color: #3F72AF;
+}
+
 .circle {
   background-color: #F9F7F7;
+}
+
+.text-color-gray {
+  color: #999999;
+}
+
+.border-color-gray {
+  color: #999999;
 }
 
 @media (prefers-color-scheme: dark) {
