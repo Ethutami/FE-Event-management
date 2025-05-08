@@ -1,35 +1,39 @@
+'use client'
 import React, { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchEvents } from "@/store/slice/eventSlice";
+import { actionEvents } from "@/store/slice/eventSlice";
 import { IEvent } from "@/interfaces/events.interface";
 import formatDate from "./dateformater";
 
-const EventCard = ({ name, start_date, price, path, id }: IEvent) => {
+const EventCard = ({ name, start_date, price, path, id, }: IEvent) => {
     const date = formatDate(start_date, false, true, false)
     const priceTag = Number(price) != 0 ? `Rp.${price}` : 'Free'
-
     return (
-        <div className="bg-[#DBE2EF] rounded-2xl shadow-md overflow-hidden w-full max-w-xs">
-            <div className="relative h-40 w-full">
-                <Image
-                    src={path || '/no-image.png'}
-                    alt={name}
-                    fill
-                    className="rounded-t-2xl"
-                    style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 768px) 100vw, 25vw"
-                />
+        <Link href={`/detail/${id}`}>
+            <div
+                className="bg-[#DBE2EF] rounded-2xl shadow-md overflow-hidden w-full max-w-xs focus:outline-none transition-transform hover:scale-105">
+                <div className="relative h-40 w-full">
+                    <Image
+                        src={path || '/no-image.png'}
+                        alt={name}
+                        fill
+                        className="rounded-t-2xl"
+                        style={{ objectFit: 'cover' }}
+                        sizes="(max-width: 768px) 100vw, 25vw"
+                    />
+                </div>
+                <div className="p-4 text-sm">
+                    <h3 className="font-semibold mb-1">{name}</h3>
+                    <p className="text-gray-600">{date}</p>
+                    <p className="mt-2 text-lg font-bold text-[#FBBC05]">{priceTag}</p>
+                    {id && (
+                        <button className="button mt-3 px-4 py-1 rounded-md text-[#F9F7F7] ">Book</button>
+                    )}
+                </div>
             </div>
-            <div className="p-4 text-sm">
-                <h3 className="font-semibold mb-1">{name}</h3>
-                <p className="text-gray-600">{date}</p>
-                <p className="mt-2 text-lg font-bold text-[#FBBC05]">{priceTag}</p>
-                {id && (
-                    <button className="button mt-3 px-4 py-1 rounded-md text-[#F9F7F7]">Book</button>
-                )}
-            </div>
-        </div>
+        </Link>
     )
 };
 
@@ -53,9 +57,8 @@ const CardComponent = () => {
     const loading = isSearching ? searchLoading : defaultLoading;
     const error = isSearching ? searchError : defaultError;
 
-
     useEffect(() => {
-        dispatch(fetchEvents())
+        dispatch(actionEvents())
     }, [dispatch])
     if (loading) {
         return <div>Loading...</div>;
