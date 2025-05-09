@@ -24,7 +24,7 @@ export default function LoginForm() {
 
   const login = async (values: ILogin) => {
     try {
-      const { data } = await axios.post("http://localhost:8080/auth/login", {
+      const { data } = await axios.post("http://localhost:8080/api/auth/login", {
         email: values.email,
         password: values.password,
       });

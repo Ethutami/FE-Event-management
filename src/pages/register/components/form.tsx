@@ -22,14 +22,14 @@ export default function RegisterForm() {
   const register = async (values: IRegister) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:8080/users?email=${values.email}`
+        `http://localhost:8080/api/users?email=${values.email}`
       );
 
       const user = data.data;
 
       if (user) throw new Error("Email sudah terdaftar");
 
-      await axios.post("http://localhost:8080/auth/register", values);
+      await axios.post("http://localhost:8080/api/auth/register", values);
 
       alert("Register Success");
 
