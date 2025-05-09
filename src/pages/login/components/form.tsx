@@ -31,6 +31,8 @@ export default function LoginForm() {
 
       const { user } = data.data;
 
+      console.log(user);
+
       console.log(user.email);
 
       const stateUser = {

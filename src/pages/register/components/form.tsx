@@ -27,7 +27,7 @@ export default function RegisterForm() {
 
       const user = data.data;
 
-      if (user) throw new Error("Email sudah terdaftar");
+      if (user) throw new Error("The email is already registered, please sign in");
 
       await axios.post("http://localhost:8080/api/auth/register", values);
 
