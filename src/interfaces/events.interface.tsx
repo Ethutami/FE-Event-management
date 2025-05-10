@@ -5,12 +5,12 @@ export interface IEvent {
     name: string;
     description: string;
     category_id: number;
-    location: 'online' | 'offline' | string; // Use union type for known values
-    start_date: string; // Can be string or Date object
+    location: 'online' | 'offline' | string;
+    start_date: string;
     end_date: string;
     total_seats: number;
     remaining_seats: number;
-    price: string; // String to handle decimal values or formatted prices
+    price: number;
     created_at: string;
     path: string;
     users: IUsers
