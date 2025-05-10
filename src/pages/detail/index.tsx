@@ -5,9 +5,9 @@ import { useParams } from "next/navigation";
 import { eventApiService } from "@/services/eventApiService";
 import { IUsers } from "@/interfaces/user.interface";
 import { IEvent } from "@/interfaces/events.interface";
-import formatDate from "@/components/dateformater";
 import VoucherCard from "@/components/voucher.component";
 import ReviewCard from "@/components/reviewCard.componet";
+import createDateFormatter from "@/components/dateformater";
 
 const CardTitle = (
     { name, users, price, date }
@@ -138,8 +138,8 @@ const DetailPage = () => {
     }, [param])
     if (data) {
         const { name, users, price, start_date, location, remaining_seats, description } = data;
-        const date = formatDate(start_date, true, false, false)
-        const time = formatDate(start_date, false, false, true)
+        const date = createDateFormatter(start_date).includeWeekday().build()
+        const time = createDateFormatter(start_date).onlyTime().build()
         return (
             <div>
                 {/* Versi untuk >=700px */}

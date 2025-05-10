@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { reviewApiService } from "@/services/reviewApiService";
 import { IReview } from "@/interfaces/review.interface";
-import formatDate from "./dateformater";
+import createDateFormatter from "./dateformater";
 
 const ReviewCard = () => {
     const [reviews, setReviews] = useState<IReview[]>([])
@@ -25,7 +25,7 @@ const ReviewCard = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 single-grid">
             {reviews.map((review: IReview, index: number) => {
-                const date = formatDate(review?.created_at, false, true, false)
+                const date = createDateFormatter(review?.created_at).onlyTime().build()
                 const userName = review?.users?.first_name + ' ' + review?.users?.last_name
                 return (
                     <div
