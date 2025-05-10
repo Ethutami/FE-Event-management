@@ -12,6 +12,7 @@ import LoginSchema from "./schema";
 import ILogin from "./type";
 import { onLogin } from "@/lib/redux/features/authSlice";
 import { useAppDispatch } from "@/lib/redux/hooks";
+import { API_URL, SECRET_KEY } from "@/config";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -24,16 +25,12 @@ export default function LoginForm() {
 
   const login = async (values: ILogin) => {
     try {
-      const { data } = await axios.post("http://localhost:8080/api/auth/login", {
+      const { data } = await axios.post(`${API_URL}/api/auth/login`, {
         email: values.email,
         password: values.password,
       });
 
       const { user } = data.data;
-
-      console.log(user);
-
-      console.log(user.email);
 
       const stateUser = {
         user: {
@@ -45,7 +42,8 @@ export default function LoginForm() {
         isLogin: true,
       };
 
-      const token = sign(stateUser, "test");
+      const token = sign(stateUser, String(SECRET_KEY));
+      console.log(SECRET_KEY);
 
       setCookie("access_token", token);
       dispatch(onLogin(stateUser));
@@ -58,7 +56,12 @@ export default function LoginForm() {
         router.push("/dashboard");
       }
     } catch (err) {
-      alert((err as any).message);
+      if (axios.isAxiosError(err) && err.response) {
+        const errorMessage = err.response.data.message;
+        alert(`${errorMessage}`);
+      } else {
+        alert("An unexpected error occurred");
+      }
     }
   };
 

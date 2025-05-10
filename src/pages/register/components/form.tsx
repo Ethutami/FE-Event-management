@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import RegisterSchema from "./schema";
 import IRegister from "./type";
+import { API_URL } from "@/config";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -21,21 +22,18 @@ export default function RegisterForm() {
 
   const register = async (values: IRegister) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:8080/api/users?email=${values.email}`
-      );
-
-      const user = data.data;
-
-      if (user) throw new Error("The email is already registered, please sign in");
-
-      await axios.post("http://localhost:8080/api/auth/register", values);
-
+      await axios.post(`${API_URL}/api/auth/register`, values);
+      
       alert("Register Success");
 
       router.push("/signin");
     } catch (err) {
-      alert((err as any).message);
+      if (axios.isAxiosError(err) && err.response) {
+        const errorMessage = err.response.data.message;
+        alert(`${errorMessage}`);
+      } else {
+        alert("An unexpected error occurred");
+      }
     }
   };
 

@@ -41,18 +41,23 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="bg-[#F9F7F7] p-8 rounded-lg shadow-md w-[500px] max-w-md m-auto">
-      <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
-        {user.first_name}
-      </h1>
-      <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
-        {user.last_name}
-      </h1>
-      <button
-        onClick={handleOnClick}
-        className="w-full p-4 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]"
-      >
-        Logout
+    <div className="bg-[#F9F7F7] p-8 rounded-lg shadow-md w-[500px] max-w-md m-auto flex gap-4">
+      <div className="w-10">
+        <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
+          {user.first_name}
+        </h1>
+        <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
+          {user.last_name}
+        </h1>
+        <button
+          onClick={handleOnClick}
+          className="w-full p-4 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]"
+        >
+          Logout
+        </button>
+      </div>
+      <button className="w-10 h-10 p-4 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]">
+        Edit
       </button>
     </div>
   );
