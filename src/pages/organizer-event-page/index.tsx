@@ -6,7 +6,7 @@ import { eventApiService } from '@/services/eventApiService';
 import { IEvent } from '@/interfaces/events.interface';
 import createDateFormatter from '@/components/dateformater';
 import checkEventStatus from '@/components/checkEventStatus.component';
-import FilterSection from '@/components/eventFilterSection.component';
+import FilterSection from '@/pages/organizer-event-page/component/eventFilterSection.component';
 
 const EventCard = () => {
     const [data, setData] = useState<IEvent[]>([])

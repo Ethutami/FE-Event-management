@@ -26,7 +26,7 @@ const FilterSection: React.FC = () => {
 
             <div className="flex flex-wrap gap-3 items-center">
                 <button
-                    className={`px-6 py-2 rounded-full font-medium ${status === 'active'
+                    className={`px-6 py-2 rounded-lg font-medium ${status === 'active'
                         ? 'button'
                         : 'inactive-button border'
                         }`}
@@ -35,7 +35,7 @@ const FilterSection: React.FC = () => {
                     On Going
                 </button>
                 <button
-                    className={`px-6 py-2 rounded-full font-medium ${status === 'active'
+                    className={`px-6 py-2 rounded-lg font-medium ${status === 'active'
                         ? 'button'
                         : 'inactive-button border'
                         }`}
@@ -44,7 +44,7 @@ const FilterSection: React.FC = () => {
                     Up Coming
                 </button>
                 <button
-                    className={`px-6 py-2 rounded-full font-medium ${status === 'inactive'
+                    className={`px-6 py-2 rounded-lg font-medium ${status === 'inactive'
                         ? 'button'
                         : 'inactive-button border'
                         }`}
@@ -54,7 +54,7 @@ const FilterSection: React.FC = () => {
                 </button>
 
                 <select
-                    className="px-2 py-2 rounded-full border text-sm dark:text-[#112D4E]"
+                    className="px-2 py-2 rounded-lg border text-sm dark:text-[#112D4E]"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                 >
@@ -64,7 +64,7 @@ const FilterSection: React.FC = () => {
                     <option>Webinar</option>
                 </select>
                 <select
-                    className="px-2 py-2 rounded-full border text-sm dark:text-[#112D4E]"
+                    className="px-2 py-2 rounded-lg border text-sm dark:text-[#112D4E]"
                     value={timeRange}
                     onChange={(e) => setTimeRange(e.target.value)}
                 >
@@ -74,7 +74,7 @@ const FilterSection: React.FC = () => {
                 </select>
                 <div className="flex-1"></div>
 
-                <button className="flex items-center px-5 py-2 bg-[rgba(63,114,175,0.1)] border border-[#DBE2EF] rounded-full dark:text-[#112D4E] font-medium hover:bg-[rgba(63,114,175,0.2)] active:scale-95 transition-transform duration-150">
+                <button className="flex items-center px-5 py-2 bg-[rgba(63,114,175,0.1)] border border-[#DBE2EF] rounded-lg dark:text-[#112D4E] font-medium hover:text-white hover:bg-[rgba(63,114,175,0.2)] active:scale-95 transition-transform duration-150">
                     <SquarePlus className='mr-2 text-[#3F72AF]' /> New Event
                 </button>
             </div>
