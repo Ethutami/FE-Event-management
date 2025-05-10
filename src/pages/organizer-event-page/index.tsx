@@ -1,82 +1,63 @@
 'use client'
-import { SquarePlus } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';;
+import Link from 'next/link';
+import { eventApiService } from '@/services/eventApiService';
+import { IEvent } from '@/interfaces/events.interface';
+import createDateFormatter from '@/components/dateformater';
+import checkEventStatus from '@/components/checkEventStatus.component';
+import FilterSection from '@/components/eventFilterSection.component';
 
-const FilterSection: React.FC = () => {
-    const [status, setStatus] = useState<'active' | 'inactive'>('active');
-    const [category, setCategory] = useState<string>('All');
-    const [timeRange, setTimeRange] = useState<string>('This Month');
-    const [searchTerm, setSearchTerm] = useState<string>('');
+const EventCard = () => {
+    const [data, setData] = useState<IEvent[]>([])
+    useEffect(() => {
+        const api = eventApiService()
+        async function getData() {
+            const res = await api.searchEvents({ organizer_id: 4 })
+            setData(res)
+        }
+        getData()
+    }, [])
 
     return (
-        <div className="bg-white rounded-xl p-6 shadow-sm flex flex-col gap-4">
-            <h2 className="text-xl font-semibold dark:text-[#112D4E]">Event Management Section</h2>
-            <div className="flex flex-wrap gap-3 items-center">
-                <button
-                    className={`px-6 py-2 rounded-full font-medium ${status === 'active'
-                        ? 'button'
-                        : 'inactive-button border'
-                        }`}
-                    onClick={() => setStatus('active')}
-                >
-                    Active
-                </button>
-                <button
-                    className={`px-6 py-2 rounded-full font-medium ${status === 'inactive'
-                        ? 'button'
-                        : 'inactive-button border'
-                        }`}
-                    onClick={() => setStatus('inactive')}
-                >
-                    Inactive
-                </button>
-
-                <select
-                    className="px-2 py-2 rounded-full border text-sm dark:text-[#112D4E]"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                >
-                    <option>Category</option>
-                    <option>Workshop</option>
-                    <option>Seminar</option>
-                    <option>Webinar</option>
-                </select>
-                <select
-                    className="px-2 py-2 rounded-full border text-sm dark:text-[#112D4E]"
-                    value={timeRange}
-                    onChange={(e) => setTimeRange(e.target.value)}
-                >
-                    <option>This Month</option>
-                    <option>Last Month</option>
-                    <option>This Year</option>
-                </select>
-                <div className="flex-1"></div>
-
-                <div className="flex items-center border rounded-full px-4 py-2 w-64 border-color-gray">
-                    <span className="mr-2">🔍</span>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="outline-none w-full text-sm text-color-gray"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
-
-                <button className="flex items-center px-5 py-2 bg-[rgba(63,114,175,0.1)] border border-[#DBE2EF] rounded-full dark:text-[#112D4E] font-medium hover:bg-[rgba(63,114,175,0.2)] active:scale-95 transition-transform duration-150">
-                    <SquarePlus className='mr-2 text-[#3F72AF]' /> New Event
-                </button>
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 mt-16">
+            {data.map((event: IEvent) => {
+                const date = createDateFormatter(event?.end_date).includeWeekday().build()
+                const status = checkEventStatus(event?.start_date, event?.end_date)
+                return (
+                    <div key={event?.id} className='rounded-2xl shadow-md bg-[#DBE2EF] overflow-hidden focus:outline-none transition-transform hover:scale-105'>
+                        <Link href={`/organizer-event-detail/${event?.id}`}>
+                            <div className="relative " >
+                                <Image src={event?.path} alt={event?.name} className="w-full h-40 object-cover rounded-t-2xl" height={100} width={100} />
+                                <span
+                                    className={`absolute top-2 left-2 text-xs px-3 py-1 rounded-full font-semibold 
+                                    ${status === "Up Coming" ? "bg-[#FBBC05]"
+                                            : status === "On Going" ? "bg-[#2EC2A7]"
+                                                : status === "Expired" ? "bg-[#ee2737]" : ""
+                                        }`}
+                                >
+                                    {status}
+                                </span>
+                            </div>
+                            <div className="p-4">
+                                <h3 className="text-base font-semibold">{event?.name}</h3>
+                                <p className="text-sm ">{event?.location}</p>
+                                <p className="text-sm text-[#ee2737] mb-6">Exp: {date}</p>
+                                <p className="text-right text-[#FBBC05] font-semibold">IDR {event?.price}</p>
+                            </div>
+                        </Link>
+                    </div>
+                )
+            })}
         </div>
     );
 };
 
-
 export default function EventOrganizerPage() {
     return (
         <div className='mt-16 px-20'>
-
             <FilterSection />
+            <EventCard />
         </div>
     )
 }

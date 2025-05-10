@@ -6,6 +6,7 @@ export interface ISearchParams {
     category_id?: number;
     start_date?: string;
     end_date?: string;
+    organizer_id: number;
 }
 
 export interface ISearchParamsState {

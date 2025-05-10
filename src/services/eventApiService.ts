@@ -47,6 +47,7 @@ const createApiService = () => {
             if (params.category_id !== undefined) query.append("category_id", params.category_id.toString());
             if (params.start_date) query.append("start_date", params.start_date);
             if (params.end_date) query.append("end_date", params.end_date);
+            if (params.organizer_id) query.append("organizer_id", params.organizer_id.toString());
 
             const url = `${BASE_URL}/event/search?${query.toString()}`;
             const response = await fetch(url, {
@@ -55,6 +56,7 @@ const createApiService = () => {
                     "Content-Type": "application/json",
                 },
             });
+
             await checkResponse(response);
 
             const data = await response.json();
