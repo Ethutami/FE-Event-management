@@ -2,6 +2,7 @@ type DateFormatOptions = {
     includeWeekday: boolean;
     includeTime: boolean;
     onlyTime: boolean;
+    dateFormat: boolean;
 };
 
 function createDateFormatter(dateString: string) {
@@ -9,7 +10,13 @@ function createDateFormatter(dateString: string) {
         includeWeekday: false, //sunday, 20 april 2025
         includeTime: false,
         onlyTime: false,
+        dateFormat: false, //MM/DD/YYYY
     };
+
+    function dateFormat() {
+        options.dateFormat = true
+        return builder
+    }
 
     function includeWeekday() {
         options.includeWeekday = true;
@@ -46,6 +53,10 @@ function createDateFormatter(dateString: string) {
             formatOptions.weekday = 'long';
         }
 
+        if (options.dateFormat) {
+            return dateString ? new Date(dateString).toISOString().slice(0, 10) : '';
+        }
+
         formattedDate = date.toLocaleDateString('id-ID', formatOptions);
 
         if (options.includeTime) {
@@ -59,6 +70,7 @@ function createDateFormatter(dateString: string) {
         includeWeekday,
         includeTime,
         onlyTime,
+        dateFormat,
         build,
     };
 

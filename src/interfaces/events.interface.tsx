@@ -1,3 +1,4 @@
+import { ICategory } from "./category.interface";
 import { IUsers } from "./user.interface";
 export interface IEvent {
     id: number;
@@ -13,7 +14,8 @@ export interface IEvent {
     price: number;
     created_at: string;
     path: string;
-    users: IUsers
+    users: IUsers;
+    event_category: ICategory;
 }
 export interface IEventsState {
     events: IEvent[]

@@ -1,8 +1,21 @@
 import { ISearchParams } from "@/interfaces/searchParams.interface";
 import { checkResponse, handleError } from "./erorHandler";
+import { IEvent } from "@/interfaces/events.interface";
 
 const createApiService = () => {
     const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    type IUpdateEvent = Partial<Pick<
+        IEvent,
+        | 'name'
+        | 'description'
+        | 'total_seats'
+        | 'remaining_seats'
+        | 'price'
+        | 'start_date'
+        | 'end_date'
+        | 'category_id'
+        | 'organizer_id'
+    >>;
 
     async function fetchCategories() {
         try {
@@ -83,12 +96,50 @@ const createApiService = () => {
             handleError(error);
         }
     }
+
+    async function updateEvent(eventId: number, body: IUpdateEvent) {
+        try {
+            const url = `${BASE_URL}/event/${eventId}`;
+            const response = await fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
+            await checkResponse(response);
+
+            const data = await response.json();
+            return data?.data;
+        } catch (error) {
+            handleError(error)
+        }
+    }
+
+    async function deleteEvent(eventId: number) {
+        try {
+            const url = `${BASE_URL}/event/${eventId}`;
+            const response = await fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            await checkResponse(response);
+        } catch (error) {
+            handleError(error)
+        }
+    }
+
     return {
         fetchCategories,
         fetchEvents,
         searchEvents,
         fetchEventDetail,
+        updateEvent,
+        deleteEvent,
     };
+
 };
 
 

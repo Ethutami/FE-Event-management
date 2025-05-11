@@ -10,14 +10,14 @@ import FilterSection from '@/pages/organizer-event-page/component/eventFilterSec
 
 const EventCard = () => {
     const [data, setData] = useState<IEvent[]>([])
+    const api = eventApiService()
     useEffect(() => {
-        const api = eventApiService()
         async function getData() {
             const res = await api.searchEvents({ organizer_id: 4 })
             setData(res)
         }
         getData()
-    }, [])
+    }, [api])
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 mt-16">
