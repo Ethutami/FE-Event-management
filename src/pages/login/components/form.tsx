@@ -42,7 +42,7 @@ export default function LoginForm() {
         isLogin: true,
       };
 
-      const token = sign(stateUser, String(SECRET_KEY));
+      const token = sign(stateUser.user, String(SECRET_KEY));
       console.log(SECRET_KEY);
 
       setCookie("access_token", token);
