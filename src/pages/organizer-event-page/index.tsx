@@ -40,8 +40,8 @@ const EventCard = () => {
                                 </span>
                             </div>
                             <div className="p-4">
-                                <h3 className="text-base font-semibold">{event?.name}</h3>
-                                <p className="text-sm ">{event?.location}</p>
+                                <h3 className="text-base font-semibold dark:text-[#112D4E]">{event?.name}</h3>
+                                <p className="text-sm dark:text-[#112D4E]">{event?.location}</p>
                                 <p className="text-sm text-[#ee2737] mb-6">Exp: {date}</p>
                                 <p className="text-right text-[#FBBC05] font-semibold">IDR {event?.price}</p>
                             </div>
