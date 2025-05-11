@@ -7,6 +7,7 @@ const initialState: IAuth = {
     first_name: "",
     last_name: "",
     role: "",
+    profile_picture: "",
   },
   isLogin: false,
 };
@@ -20,6 +21,7 @@ export const authSlice = createSlice({
       state.user.first_name = action.payload.user.first_name;
       state.user.last_name = action.payload.user.last_name;
       state.user.role = action.payload.user.role;
+      state.user.profile_picture = action.payload.user.profile_picture;
       state.isLogin = true;
     },
     onLogout: (state: IAuth) => {
@@ -27,6 +29,7 @@ export const authSlice = createSlice({
       state.user.first_name = "";
       state.user.last_name = "";
       state.user.role = "";
+      state.user.profile_picture = "";
       state.isLogin = false;
     },
   },

@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
-import { IAuth } from "./interfaces/auth.interface";
+import { IUser } from "./interfaces/auth.interface";
 import { jwtDecode } from "jwt-decode";
 
 export default async function middleware(req: NextRequest) {
   try {
-    console.log("running");
     const cookieStore = await cookies();
 
     const protectedRoute = req.nextUrl.pathname === "/dashboard";
@@ -14,7 +13,7 @@ export default async function middleware(req: NextRequest) {
     const access_token = cookieStore.get("access_token")?.value || "";
 
     if (protectedRoute && access_token) {
-      const { user } = jwtDecode<IAuth>(access_token);
+      const user = jwtDecode<IUser>(access_token);
       if (user.role === "organizer") {
         return NextResponse.next(); // Allow access to the dashboard
       }

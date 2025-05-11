@@ -1,18 +1,15 @@
-"use client"
+"use client";
 
 import { Formik, Form, Field, FormikProps } from "formik";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-import sign from "jwt-encode";
-import { setCookie } from "cookies-next";
-
 import LoginSchema from "./schema";
 import ILogin from "./type";
 import { onLogin } from "@/lib/redux/features/authSlice";
 import { useAppDispatch } from "@/lib/redux/hooks";
-import { API_URL, SECRET_KEY } from "@/config";
+import { API_URL } from "@/config";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -25,12 +22,16 @@ export default function LoginForm() {
 
   const login = async (values: ILogin) => {
     try {
-      const { data } = await axios.post(`${API_URL}/api/auth/login`, {
-        email: values.email,
-        password: values.password,
-      });
+      const { data } = await axios.post(
+        `${API_URL}/api/auth/login`,
+        {
+          email: values.email,
+          password: values.password,
+        },
+        { withCredentials: true }
+      );
 
-      const { user } = data.data;
+      const user = data.data;
 
       const stateUser = {
         user: {
@@ -38,22 +39,19 @@ export default function LoginForm() {
           first_name: user.first_name,
           last_name: user.last_name,
           role: user.role,
+          profile_picture: user.profile_picture,
         },
         isLogin: true,
       };
 
-      const token = sign(stateUser.user, String(SECRET_KEY));
-      console.log(SECRET_KEY);
-
-      setCookie("access_token", token);
       dispatch(onLogin(stateUser));
 
       alert("Login Success");
 
-      if (user.role === "customer") {
-        router.push("/main");
-      } else {
+      if (user.role == "organizer") {
         router.push("/dashboard");
+      } else {
+        router.push("/main");
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
