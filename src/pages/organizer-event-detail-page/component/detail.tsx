@@ -73,7 +73,6 @@ export const EventDetails = () => {
         set()
     }
 
-
     useEffect(() => {
         onHandleData();
     }, [onHandleData]);

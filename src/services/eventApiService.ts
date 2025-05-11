@@ -130,7 +130,7 @@ const createApiService = () => {
             handleError(error)
         }
     }
-    async function createEvent(body: IEvent) {
+    async function createEvent(body: IUpdateEvent) {
         try {
             const url = `${BASE_URL}/event/`;
             const response = await fetch(url, {
