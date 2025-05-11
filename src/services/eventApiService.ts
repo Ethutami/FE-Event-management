@@ -130,6 +130,21 @@ const createApiService = () => {
             handleError(error)
         }
     }
+    async function createEvent(body: IEvent) {
+        try {
+            const url = `${BASE_URL}/event/`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body)
+            });
+            await checkResponse(response);
+        } catch (error) {
+            handleError(error)
+        }
+    }
 
     return {
         fetchCategories,
@@ -138,10 +153,10 @@ const createApiService = () => {
         fetchEventDetail,
         updateEvent,
         deleteEvent,
+        createEvent,
     };
 
 };
-
 
 let apiService: ReturnType<typeof createApiService> | null = null;
 

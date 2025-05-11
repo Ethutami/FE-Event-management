@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import { SquarePlus } from "lucide-react";
+import Link from "next/link";
 
 const FilterSection: React.FC = () => {
     const [status, setStatus] = useState<'active' | 'inactive'>('active');
@@ -73,10 +74,11 @@ const FilterSection: React.FC = () => {
                     <option>This Year</option>
                 </select>
                 <div className="flex-1"></div>
-
-                <button className="flex items-center px-5 py-2 bg-[rgba(63,114,175,0.1)] border border-[#DBE2EF] rounded-lg dark:text-[#112D4E] font-medium hover:text-white hover:bg-[rgba(63,114,175,0.2)] active:scale-95 transition-transform duration-150">
-                    <SquarePlus className='mr-2 text-[#3F72AF]' /> New Event
-                </button>
+                <Link href="/create-event-page">
+                    <button className="flex items-center px-5 py-2 bg-[rgba(63,114,175,0.1)] border border-[#DBE2EF] rounded-lg dark:text-[#112D4E] font-medium hover:text-white hover:bg-[rgba(63,114,175,0.2)] active:scale-95 transition-transform duration-150">
+                        <SquarePlus className='mr-2 text-[#3F72AF]' /> New Event
+                    </button>
+                </Link>
             </div>
         </div>
     );

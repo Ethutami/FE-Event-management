@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { CalendarDays, MapPin, SquarePlus, Tag } from 'lucide-react';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css"; // Styling
+import "react-datepicker/dist/react-datepicker.css";
 import { eventApiService } from '@/services/eventApiService';
 import { IEvent } from '@/interfaces/events.interface';
-import createDateFormatter from '@/components/dateformater';
 import { ICategory } from '@/interfaces/category.interface';
+import createDateFormatter from '@/components/dateformater';
 
 export const EventDetails = () => {
     const [categories, setCategory] = useState<ICategory[]>([]);
@@ -30,15 +30,13 @@ export const EventDetails = () => {
     const router = useRouter();
     const api = eventApiService()
 
-    const onHandleDate = useCallback(async () => {
+    const onHandleData = useCallback(async () => {
+        const res = await api.fetchCategories()
+        setCategory(res)
         if (param?.id) {
             try {
-                const [eventRes, categoriesRes] = await Promise.all([
-                    api.fetchEventDetail(Number(param?.id)),
-                    api.fetchCategories()
-                ])
-                setData(eventRes)
-                setCategory(categoriesRes)
+                const res = await api.fetchEventDetail(Number(param?.id))
+                setData(res)
             } catch (error) {
                 console.log('detail', error);
             }
@@ -47,12 +45,38 @@ export const EventDetails = () => {
             setIsEditMode(true)
             setEventPrice(0)
             setEventSeat(0)
+            setEventPrice(0)
+            setEventSeat(0)
+            setNewStartDate(null)
+            setEndDate(null)
+            setImagePath('')
+            return;
         }
     }, [param?.id, api]);
 
+    const onCreateData = () => {
+        const newData = {
+            name: eventName.toString(),
+            description: eventDescription.toString(),
+            category_id: Number(categorySelected.id),
+            start_date: newEndDate?.toISOString().toString(),
+            end_date: newStartDate?.toISOString().toString(),
+            total_seats: Number(eventSeat),
+            remaining_seats: Number(eventSeat),
+            price: Number(eventPrice),
+            path: "https://picsum.photos/id/61/600/400",
+            organizer_id: Number(4),
+        }
+        async function set() {
+            await api.createEvent(newData)
+        }
+        set()
+    }
+
+
     useEffect(() => {
-        onHandleDate();
-    }, [onHandleDate]);
+        onHandleData();
+    }, [onHandleData]);
 
     useEffect(() => {
         if (data?.path) {
@@ -135,25 +159,48 @@ export const EventDetails = () => {
 
     const toggleEditMode = () => {
         if (isEditMode) {
-            onHandleChange()
+            if (param?.id) {
+                onHandleChange()
+                return;
+            } else {
+                onCreateData()
+                router.back()
+                return;
+            }
         } else {
-            setEventName('')
-            setEventDescription('')
+            setIsEditMode(true)
             setEventPrice(0)
             setEventSeat(0)
+            setEventPrice(0)
+            setEventSeat(0)
+            setNewStartDate(null)
+            setEndDate(null)
+            setImagePath('')
+            setCategory([])
         }
         setIsEditMode(!isEditMode);
     };
 
     const onDelete = () => {
-        try {
-            api.deleteEvent(Number(param?.id))
-            router.back()
-        } catch (error) {
-            console.log(error);
-
+        if (isEditMode) {
+            setIsEditMode(true)
+            setEventPrice(0)
+            setEventSeat(0)
+            setEventPrice(0)
+            setEventSeat(0)
+            setNewStartDate(null)
+            setEndDate(null)
+            setImagePath('')
+            setCategory([])
+        } else {
+            try {
+                api.deleteEvent(Number(param?.id))
+                router.back()
+                return;
+            } catch (error) {
+                console.log(error);
+            }
         }
-
     }
 
     return (
@@ -166,14 +213,20 @@ export const EventDetails = () => {
                     ← Back
                 </button>
                 <h2 className="text-center text-2xl font-semibold mb-6 dark:text-[#112D4E]">Event Details</h2>
-                <button className="flex items-center px-8 py-0 bg-[rgba(63,114,175,0.1)] border border-[#DBE2EF] rounded-lg dark:text-[#112D4E] font-medium hover:text-white hover:bg-[rgba(63,114,175,0.2)] active:scale-95 transition-transform duration-150">
-                    <SquarePlus className='mr-2 text-[#3F72AF] py-0' /> New Event
-                </button>
+                {
+                    param?.id ?
+                        <button
+                            onClick={() => router.push('/create-event-page')}
+                            className="flex items-center px-8 py-0 bg-[rgba(63,114,175,0.1)] border border-[#DBE2EF] rounded-lg dark:text-[#112D4E] font-medium hover:text-white hover:bg-[rgba(63,114,175,0.2)] active:scale-95 transition-transform duration-150">
+                            <SquarePlus className='mr-2 text-[#3F72AF] py-0' /> New Event
+                        </button>
+                        : <span></span>
+                }
             </div>
             <div >
                 <div className="grid md:grid-cols-4 gap-6">
                     <div className="col-span-2">
-                        <label className="text-xs font-medium mb-1 block">Event Name</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Event Name</label>
                         <div className="relative">
                             <input
                                 type="text"
@@ -188,13 +241,13 @@ export const EventDetails = () => {
                         </div>
                     </div>
                     <div>
-                        <label className="text-xs font-medium mb-1 block">Start Date</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Start Date</label>
 
                         <div className="relative">
                             {isEditMode ? <DatePicker
                                 selected={newStartDate}
                                 onChange={(date) => setNewStartDate(date)}
-                                className="w-full pl-10 pr-3 py-2 rounded border border-color-gray"
+                                className="w-full pl-10 pr-3 py-2 rounded border border-color-gray text-[#112D4E]"
                             /> :
                                 <input
                                     type="date"
@@ -206,12 +259,12 @@ export const EventDetails = () => {
                         </div>
                     </div>
                     <div>
-                        <label className="text-xs font-medium mb-1 block">End Date</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">End Date</label>
                         <div className="relative">
                             {isEditMode ? <DatePicker
                                 selected={newEndDate}
                                 onChange={(date) => setEndDate(date)}
-                                className="w-full pl-10 pr-3 py-2 rounded border border-color-gray"
+                                className="w-full pl-10 pr-3 py-2 rounded border border-color-gray text-[#112D4E]"
                             /> :
                                 <input
                                     type="date"
@@ -225,19 +278,19 @@ export const EventDetails = () => {
                 </div>
                 <div className="grid md:grid-cols-4 gap-6 mt-6">
                     <div className='col-span-2'>
-                        <label className="text-xs font-medium mb-1 block">Location</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Location</label>
                         <div className="relative">
                             <input
                                 type="text"
-                                value={data?.location || ''}
+                                value={data?.location || 'Online'}
                                 readOnly
-                                className={`w-full pl-10 pr-3 py-2 rounded border text-color-gray border-color-gray`}
+                                className={`w-full pl-10 pr-3 py-2 rounded border text-color-gray border-color-gray cursor-not-allowed`}
                             />
                             <MapPin className="absolute left-3 top-2.5 h-4 w-4 text-color-gray" />
                         </div>
                     </div>
                     <div>
-                        <label className="text-xs font-medium mb-1 block">Category</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Category</label>
                         <select
                             className={`w-full px-3 py-2 rounded border border-color-gray ${isEditMode ? 'text-[#112D4E]' : 'cursor-not-allowed text-color-gray'}`}
                             value={isEditMode ? categorySelected?.category : data?.event_category?.category}
@@ -253,7 +306,7 @@ export const EventDetails = () => {
                     </div>
                     {
                         !isEditMode && <div>
-                            <label className="text-xs font-medium mb-1 block">Event Time</label>
+                            <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Event Time</label>
                             <input
                                 type="time"
                                 value={time || ''}
@@ -266,7 +319,7 @@ export const EventDetails = () => {
                 </div>
             </div>
             <div className="mt-5">
-                <label className="text-xs font-medium mb-1 block">Event Description</label>
+                <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Event Description</label>
                 <textarea
                     value={isEditMode ? eventDescription : data?.description}
                     onChange={(e) => setEventDescription(e.target.value)}
@@ -277,7 +330,7 @@ export const EventDetails = () => {
             <div className="flex flex-row justify-between">
                 <div className="flex items-end gap-2">
                     <div className="relative">
-                        <label className="text-xs font-medium mb-1 block">Ticket Price</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Ticket Price</label>
                         <div className="relative">
                             <input
                                 type="number"
@@ -294,7 +347,7 @@ export const EventDetails = () => {
                         </div>
                     </div>
                     <div>
-                        <label className="text-xs font-medium mb-1 block">Max Seats</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Max Seats</label>
                         <label className='text-[#ee2737] text-xs'>{validateSeat}</label>
                         <input
                             type="number"
@@ -309,7 +362,7 @@ export const EventDetails = () => {
                         />
                     </div>
                     <div >
-                        <label className="text-xs font-medium mb-1 block">Available Seats</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Available Seats</label>
                         <input
                             type="number"
                             value={data?.remaining_seats || ''}
@@ -318,7 +371,7 @@ export const EventDetails = () => {
                         />
                     </div>
                     <div >
-                        <label className="text-xs font-medium mb-1 block">Created</label>
+                        <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Created</label>
                         <input
                             type="date"
                             value={created || ''}
@@ -337,7 +390,7 @@ export const EventDetails = () => {
                     <button
                         onClick={onDelete}
                         className="h-9 px-10 bg-[rgba(238,39,55,0.4)] text-[#EE2737] hover:text-white hover:bg-[rgba(238,39,55,10)] active:scale-95 transition-transform duration-150 text-sm rounded-md font-medium cursor-pointer"
-                    >Delete
+                    >{isEditMode ? 'Reset' : 'Delete'}
                     </button>
                 </div>
             </div>
