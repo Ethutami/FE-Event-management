@@ -1,11 +1,11 @@
 import { handleError } from "./erorHandler";
 
 const createApiService = () => {
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
     async function fetchEventReview(eventId: number) {
         try {
-            const url = `${BASE_URL}/review/event/${eventId}`;
+            const url = `${BASE_URL}/api/reviews/event/${eventId}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {

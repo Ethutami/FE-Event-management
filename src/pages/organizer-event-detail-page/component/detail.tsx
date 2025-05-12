@@ -26,6 +26,7 @@ export const EventDetails = () => {
     const [newStartDate, setNewStartDate] = useState<Date | null>();
     const [newEndDate, setEndDate] = useState<Date | null>();
     const [imagePath, setImagePath] = useState('');
+    const [buttonSave, setButtonSave] = useState(false);
     const param = useParams()
     const router = useRouter();
     const api = eventApiService()
@@ -177,24 +178,22 @@ export const EventDetails = () => {
     };
 
     const toggleEditMode = () => {
-        if (isEditMode) {
-            if (param?.id) {
+        if (param?.id) {
+            setIsEditMode(true);
+            setCategory([]);
+            setEventPrice(data?.price || 0)
+            setEventSeat(data?.total_seats || 0)
+            setImagePath(data?.path || '')
+            setEventDescription(data?.description || '')
+            setEventName(data?.name || '')
+            handleCategoryService();
+            if (buttonSave) {
                 handleUpdateService();
+                return;
             }
         } else {
-            if (param?.id) {
-                setIsEditMode(true);
-                setCategory([]);
-                setEventPrice(data?.price || 0)
-                setEventSeat(data?.total_seats || 0)
-                setImagePath(data?.path || '')
-                setEventDescription(data?.description || '')
-                setEventName(data?.name || '')
-                handleCategoryService();
-            } else {
-                onCreateData();
-                router.back();
-            }
+            onCreateData();
+            router.back();
         }
     };
 
@@ -403,7 +402,7 @@ export const EventDetails = () => {
                 </div>
                 <div className="flex items-end gap-2">
                     <button
-                        onClick={toggleEditMode}
+                        onClick={() => { toggleEditMode(); setButtonSave(!buttonSave) }}
                         disabled={!param?.id && isEditMode && !isFormValid()}
                         className=
                         {`h-9 px-10 
