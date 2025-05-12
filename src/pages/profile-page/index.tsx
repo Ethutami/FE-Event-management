@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
 import Link from "next/link";
 
-import { onLogin, onLogout } from "@/lib/redux/features/authSlice";
 import { deleteCookie, getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
+import { onLogin, onLogout } from "@/store/slice/authSlice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { IAuth, IUser } from "@/interfaces/auth.interface";
 import { useRouter } from "next/navigation";
 import { IMAGE_URL } from "@/config";

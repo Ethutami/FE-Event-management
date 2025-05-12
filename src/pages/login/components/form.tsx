@@ -1,15 +1,15 @@
 "use client";
 
-import { Formik, Form, Field, FormikProps } from "formik";
-import Link from "next/link";
-import axios from "axios";
 import { useRouter } from "next/navigation";
-
-import LoginSchema from "./schema";
-import ILogin from "./type";
-import { onLogin } from "@/lib/redux/features/authSlice";
-import { useAppDispatch } from "@/lib/redux/hooks";
+import Link from "next/link";
+import Image from "next/image";
+import axios from "axios";
+import { Formik, Form, Field, FormikProps } from "formik";
 import { API_URL } from "@/config";
+import { onLogin } from "@/store/slice/authSlice";
+import { useAppDispatch } from "@/store/hooks";
+import ILogin from "./type";
+import LoginSchema from "./schema";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function LoginForm() {
   const login = async (values: ILogin) => {
     try {
       const { data } = await axios.post(
-        `${API_URL}/api/auth/login`,
+        `${API_URL}/auth/login`,
         {
           email: values.email,
           password: values.password,
@@ -118,7 +118,7 @@ export default function LoginForm() {
               </button>
               <div className="flex gap-4 mt-4 mb-4">
                 <button className="flex-1 flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-[#DBE2EF] text-[#112D4E]">
-                  <img
+                  <Image
                     src="/google-icon.svg"
                     alt="Google"
                     className="h-5 w-5 mr-2"
@@ -129,7 +129,7 @@ export default function LoginForm() {
                 </button>
               </div>
               <p className="text-center mt-4 text-[#112D4E]">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link href="/signup" className="text-[#3F72AF] underline">
                   Sign Up
                 </Link>
