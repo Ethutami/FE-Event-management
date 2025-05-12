@@ -15,7 +15,7 @@ const CategoryChips = () => {
     }, [dispatch])
 
     const handleCategoryClick = (categoryId: number) => {
-        dispatch(actionEventSearch(categoryId));
+        dispatch(actionEventSearch({ category_id: categoryId }));
     };
     if (loading) {
         return <div>Loading...</div>;

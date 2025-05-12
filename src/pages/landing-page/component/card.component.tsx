@@ -5,10 +5,10 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actionEvents } from "@/store/slice/eventSlice";
 import { IEvent } from "@/interfaces/events.interface";
-import formatDate from "../../../components/dateformater";
+import createDateFormatter from "@/components/dateformater";
 
 const EventCard = ({ name, start_date, price, path, id, }: IEvent) => {
-    const date = formatDate(start_date, false, true, false)
+    const date = createDateFormatter(start_date).includeWeekday().build()
     const priceTag = Number(price) != 0 ? `Rp.${price}` : 'Free'
     return (
         <Link href={`/detail/${id}`}>
@@ -29,7 +29,7 @@ const EventCard = ({ name, start_date, price, path, id, }: IEvent) => {
                     <p className="text-gray-600">{date}</p>
                     <p className="mt-2 text-lg font-bold text-[#FBBC05]">{priceTag}</p>
                     {id && (
-                        <button className="button mt-3 px-4 py-1 rounded-md text-[#F9F7F7] ">Book</button>
+                        <button className="button mt-3 px-4 py-1 rounded-md ">Book</button>
                     )}
                 </div>
             </div>

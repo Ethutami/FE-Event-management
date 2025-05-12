@@ -15,10 +15,34 @@
 
 .button {
   background-color: #112D4E;
+  color: #F9F7F7;
+}
+
+.button:hover {
+  background-color: #FBBC05;
+  transform: scale(1.05);
+}
+
+.button:focus {
+  outline: none;
+}
+
+.inactive-button {
+  background-color: #fff;
+  border-color: #3F72AF;
+  color: #3F72AF;
 }
 
 .circle {
   background-color: #F9F7F7;
+}
+
+.text-color-gray {
+  color: #999999;
+}
+
+.border-color-gray {
+  border-color: #999999;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,6 +61,7 @@
 
   .button {
     background-color: #3F72AF;
+    color: #F9F7F7;
   }
 
   .button:hover {

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { eventApiService } from "@/services/eventApiService";
-import { ISearchParamsState } from "@/interfaces/searchParams.interface";
+import { ISearchParams, ISearchParamsState } from "@/interfaces/searchParams.interface";
 
 const api = eventApiService()
 
@@ -12,9 +12,9 @@ const initialState: ISearchParamsState = {
 
 export const actionEventSearch = createAsyncThunk(
     'eventsearchParamsReducers/eventSearch',
-    async (categoryId: number, thunkAPI) => {
+    async (params: ISearchParams, thunkAPI) => {
         try {
-            const data = await api.searchEvents({ category_id: categoryId });
+            const data = await api.searchEvents(params);
             return data;
         } catch (error: unknown) {
             if (error instanceof Error) {

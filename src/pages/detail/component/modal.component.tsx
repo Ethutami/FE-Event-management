@@ -1,13 +1,14 @@
 import React from 'react';
 import { IVoucherModalProps } from '@/interfaces/voucher.interface';
-import formatDate from '../../../components/dateformater';
+import createDateFormatter from '@/components/dateformater';
+
 
 const VoucherModal: React.FC<IVoucherModalProps> = ({ isOpen, onClose, data }) => {
     if (!isOpen) return null;
 
     let date = '';
     if (data?.expired_date) {
-        date = formatDate(data.expired_date, false, true, false);
+        date = createDateFormatter(data.expired_date).includeTime().build()
     }
     return (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
