@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';;
 import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -12,16 +12,26 @@ import { checkEventStatus } from '@/components/checkEventStatus.component';
 const EventCard = () => {
     const { events: searchEvent } = useAppSelector((state) => state?.eventsearchParamsReducers);
     const { events: filterStatus } = useAppSelector((state) => state?.eventStatusReducer);
+    const [isSearching, setIsSearching] = useState(filterStatus?.length > 0);
     const dispatch = useAppDispatch()
 
-    const isSearching = filterStatus?.length > 0;
     const events = isSearching ? filterStatus : searchEvent;
 
     useEffect(() => {
         dispatch(actionEventSearch({ organizer_id: 4 }))
     }, [dispatch])
 
-    useEffect(() => { }, [events])
+    useEffect(() => {
+        if (searchEvent?.length > 0) {
+            setIsSearching(false);
+        }
+    }, [searchEvent]);
+
+    useEffect(() => {
+        if (filterStatus?.length > 0) {
+            setIsSearching(true);
+        }
+    }, [filterStatus]);
 
     if (events) {
         return (

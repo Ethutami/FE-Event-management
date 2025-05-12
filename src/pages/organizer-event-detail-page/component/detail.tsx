@@ -21,7 +21,7 @@ export const EventDetails = () => {
     const [eventName, setEventName] = useState<string>('')
     const [eventDescription, setEventDescription] = useState<string>('')
     const [eventPrice, setEventPrice] = useState<number>(0)
-    const [eventSeat, setEventSeat] = useState<number>()
+    const [eventSeat, setEventSeat] = useState<number>(0)
     const [validateSeat, setValidateSeat] = useState<string>()
     const [newStartDate, setNewStartDate] = useState<Date | null>();
     const [newEndDate, setEndDate] = useState<Date | null>();
@@ -30,66 +30,29 @@ export const EventDetails = () => {
     const router = useRouter();
     const api = eventApiService()
 
-    const onHandleData = useCallback(async () => {
+    const isFormValid = () => {
+        return (
+            eventPrice >= 0 &&
+            eventSeat > 0 &&
+            newStartDate !== null &&
+            endDate !== null &&
+            categorySelected.category !== '' &&
+            eventDescription.trim() !== '' &&
+            eventName.trim() !== ''
+        );
+    };
+
+    const handleCategoryService = useCallback(async () => {
         const res = await api.fetchCategories()
         setCategory(res)
-        if (param?.id) {
-            try {
-                const res = await api.fetchEventDetail(Number(param?.id))
-                setData(res)
-            } catch (error) {
-                console.log('detail', error);
-            }
-            return;
-        } else {
-            setIsEditMode(true)
-            setEventPrice(0)
-            setEventSeat(0)
-            setEventPrice(0)
-            setEventSeat(0)
-            setNewStartDate(null)
-            setEndDate(null)
-            setImagePath('')
-            return;
-        }
-    }, [api, param]);
+    }, [api])
 
-    const onCreateData = () => {
-        const newData = {
-            name: eventName.toString(),
-            description: eventDescription.toString(),
-            category_id: Number(categorySelected.id),
-            start_date: newEndDate?.toISOString().toString(),
-            end_date: newStartDate?.toISOString().toString(),
-            total_seats: Number(eventSeat),
-            remaining_seats: Number(eventSeat),
-            price: Number(eventPrice),
-            path: "https://picsum.photos/id/61/600/400",
-            organizer_id: Number(4),
-        }
-        async function set() {
-            await api.createEvent(newData)
-        }
-        set()
-    }
+    const handleDataService = useCallback(async () => {
+        const res = await api.fetchEventDetail(Number(param?.id))
+        setData(res)
+    }, [api, param?.id])
 
-    useEffect(() => {
-        onHandleData();
-    }, [onHandleData]);
-
-    useEffect(() => {
-        if (data?.path) {
-            setImagePath(data.path);
-        }
-    }, [data]);
-
-    const startDate = createDateFormatter(data?.start_date ?? '').dateFormat().build()
-    const endDate = createDateFormatter(data?.end_date ?? '').dateFormat().build()
-    const time = createDateFormatter(data?.start_date ?? '').onlyTime().build()
-    const created = createDateFormatter(data?.created_at ?? '').dateFormat().build()
-
-    function onHandleChange() {
-        const api = eventApiService()
+    function handleUpdateService() {
         const ISOStartDate = newStartDate?.toISOString() || "2025-05-15T10:00:00Z"
         const ISOEndDate = newEndDate?.toISOString() || "2025-05-15T18:00:00Z"
 
@@ -123,7 +86,6 @@ export const EventDetails = () => {
 
         for (const key of Object.keys(fields) as (keyof IEvent)[]) {
             const value = fields[key];
-
             if (
                 value !== undefined &&
                 value !== null &&
@@ -135,11 +97,69 @@ export const EventDetails = () => {
         }
         async function set() {
             await api.updateEvent(Number(param?.id), eventDetails)
-            const res = await api.fetchEventDetail(Number(param?.id))
-            setData(res)
+            handleDataService()
+            setIsEditMode(!isEditMode)
+            return;
+        }
+        set()
+        return;
+    }
+
+    const onAppear = useCallback(async () => {
+        handleCategoryService()
+        if (param?.id) {
+            try {
+                handleDataService()
+            } catch (error) {
+                console.log('detail', error);
+            }
+            return;
+        } else {
+            setIsEditMode(true)
+            setEventPrice(0)
+            setEventSeat(0)
+            setEventPrice(0)
+            setEventSeat(0)
+            setNewStartDate(null)
+            setEndDate(null)
+            setImagePath('')
+            return;
+        }
+    }, [handleCategoryService, handleDataService, param?.id]);
+
+    const onCreateData = () => {
+        const newData = {
+            name: eventName.toString(),
+            description: eventDescription.toString(),
+            category_id: Number(categorySelected.id),
+            start_date: newEndDate?.toISOString().toString(),
+            end_date: newStartDate?.toISOString().toString(),
+            total_seats: Number(eventSeat),
+            remaining_seats: Number(eventSeat),
+            price: Number(eventPrice),
+            path: "https://picsum.photos/id/61/600/400",
+            organizer_id: Number(4),
+        }
+        async function set() {
+            await api.createEvent(newData)
         }
         set()
     }
+
+    useEffect(() => {
+        onAppear();
+    }, [onAppear]);
+
+    useEffect(() => {
+        if (data?.path) {
+            setImagePath(data.path);
+        }
+    }, [data]);
+
+    const startDate = createDateFormatter(data?.start_date ?? '').dateFormat().build()
+    const endDate = createDateFormatter(data?.end_date ?? '').dateFormat().build()
+    const time = createDateFormatter(data?.start_date ?? '').onlyTime().build()
+    const created = createDateFormatter(data?.created_at ?? '').dateFormat().build()
 
     function onHandleCategory(name: string) {
         const category = categories.find(cat => cat.category === name);
@@ -148,7 +168,7 @@ export const EventDetails = () => {
         }
     }
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onHandleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             const imageUrl = URL.createObjectURL(file);
@@ -159,41 +179,41 @@ export const EventDetails = () => {
     const toggleEditMode = () => {
         if (isEditMode) {
             if (param?.id) {
-                onHandleChange()
-                return;
-            } else {
-                onCreateData()
-                router.back()
-                return;
+                handleUpdateService();
             }
         } else {
-            setIsEditMode(true)
-            setEventPrice(0)
-            setEventSeat(0)
-            setEventPrice(0)
-            setEventSeat(0)
-            setNewStartDate(null)
-            setEndDate(null)
-            setImagePath('')
-            setCategory([])
+            if (param?.id) {
+                setIsEditMode(true);
+                setCategory([]);
+                setEventPrice(data?.price || 0)
+                setEventSeat(data?.total_seats || 0)
+                setImagePath(data?.path || '')
+                setEventDescription(data?.description || '')
+                setEventName(data?.name || '')
+                handleCategoryService();
+            } else {
+                onCreateData();
+                router.back();
+            }
         }
-        setIsEditMode(!isEditMode);
     };
 
     const onDelete = () => {
+        handleCategoryService()
         if (isEditMode) {
             setIsEditMode(true)
             setEventPrice(0)
-            setEventSeat(0)
             setEventPrice(0)
             setEventSeat(0)
             setNewStartDate(null)
             setEndDate(null)
             setImagePath('')
-            setCategory([])
+            setEventDescription('')
+            setEventName('')
         } else {
             try {
                 api.deleteEvent(Number(param?.id))
+                api.searchEvents({ organizer_id: 4 })
                 router.back()
                 return;
             } catch (error) {
@@ -241,7 +261,6 @@ export const EventDetails = () => {
                     </div>
                     <div>
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Start Date</label>
-
                         <div className="relative">
                             {isEditMode ? <DatePicker
                                 selected={newStartDate}
@@ -256,6 +275,7 @@ export const EventDetails = () => {
                                 />}
                             <CalendarDays className="absolute left-3 top-2.5 h-4 w-4 text-color-gray" />
                         </div>
+                        <label className="text-2xs font-light mb-1 block dark:text-[#112D4E]">*Start date must be at least tomorrow.</label>
                     </div>
                     <div>
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">End Date</label>
@@ -273,6 +293,7 @@ export const EventDetails = () => {
                                 />}
                             <CalendarDays className="absolute left-3 top-2.5 h-4 w-4 text-color-gray" />
                         </div>
+                        <label className="text-2xs font-light mb-1 block dark:text-[#112D4E]">*End date must be after start date</label>
                     </div>
                 </div>
                 <div className="grid md:grid-cols-4 gap-6 mt-6">
@@ -383,7 +404,14 @@ export const EventDetails = () => {
                 <div className="flex items-end gap-2">
                     <button
                         onClick={toggleEditMode}
-                        className={`h-9 px-10 ${isEditMode ? 'bg-[rgba(46,194,167,0.8)]' : 'bg-[rgba(63,114,175,0.4)]'}  border-[#DBE2EF] dark:text-[#112D4E] hover:text-white ${isEditMode ? 'hover:bg-[rgba(46,194,167,1)]' : 'hover:bg-[rgba(63,114,175,0.8)]'} active:scale-95 transition-transform duration-150 text-sm rounded-md font-medium cursor-pointer`}
+                        disabled={!param?.id && isEditMode && !isFormValid()}
+                        className=
+                        {`h-9 px-10 
+                                    ${isEditMode ? 'bg-[rgba(46,194,167,0.8)]' : 'bg-[rgba(63,114,175,0.4)]'}  
+                                    border-[#DBE2EF] dark:text-[#112D4E] hover:text-white 
+                                    ${isEditMode ? 'hover:bg-[rgba(46,194,167,1)]' : 'hover:bg-[rgba(63,114,175,0.8)]'} 
+                                    active:scale-95 transition-transform duration-150 text-sm rounded-md font-medium 
+                                    ${!param?.id && isEditMode && !isFormValid() ? 'cursor-not-allowed' : 'cursor-pointer '}`}
                     >{isEditMode ? 'Save' : 'Edit'}
                     </button>
                     <button
@@ -398,7 +426,7 @@ export const EventDetails = () => {
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={handleImageChange}
+                        onChange={onHandleImageChange}
                         className="cursor-pointer"
                     />
                 </div>}

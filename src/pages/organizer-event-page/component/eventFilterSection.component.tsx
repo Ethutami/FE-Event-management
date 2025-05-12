@@ -10,8 +10,7 @@ import { ICategory } from "@/interfaces/category.interface";
 import { filterEventsByStatus } from "@/components/checkEventStatus.component";
 
 const FilterSection: React.FC = () => {
-    const [status, setStatus] = useState<'ongoing' | 'upcoming' | 'expired'>('ongoing');
-    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [status, setStatus] = useState<'ongoing' | 'upcoming' | 'expired' | 'default'>('default');
     const [categories, setCategory] = useState<ICategory[]>([]);
     const [categorySelected, setCategorySelected] = useState<{ id: number, category: string }>({
         id: 0,
@@ -32,6 +31,7 @@ const FilterSection: React.FC = () => {
         if (category && category.id !== undefined && !isNaN(Number(category.id))) {
             setCategorySelected({ id: Number(category.id), category: category.category })
             dispatch(actionEventSearch({ category_id: category?.id, organizer_id: 4 }))
+            setStatus('default')
         }
     }
 
@@ -46,18 +46,8 @@ const FilterSection: React.FC = () => {
 
     return (
         <div className="bg-white rounded-xl p-6 shadow-sm flex flex-col gap-4">
-            <div className="flex flex-row justify-between">
-                <h2 className="text-xl font-semibold dark:text-[#112D4E]">Event Management Section</h2>
-                <div className="flex items-center border rounded-full px-4 py-2 w-lg border-color-gray">
-                    <span className="mr-2">🔍</span>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        className="outline-none w-full text-sm text-color-gray"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
+            <div className="flex flex-row justify-center mb-8">
+                <h2 className="text-2xl font-semibold dark:text-[#112D4E]">Event Management Section</h2>
             </div>
 
             <div className="flex flex-wrap gap-3 items-center">
