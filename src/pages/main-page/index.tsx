@@ -2,6 +2,7 @@
 import { ImageSlider } from "./component/slider.component";
 import CategoryChips from "./component/category.component";
 import CardComponent from "./component/card.component";
+import ProfilePage from "../profile-page";
 
 const HeroSection = () => {
   return (
@@ -19,6 +20,7 @@ export default function MainPage() {
         </h1>
       </div>
       <div>
+        <ProfilePage />
         <HeroSection />
         <CategoryChips />
         <CardComponent />

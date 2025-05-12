@@ -1,9 +1,11 @@
+import { getCookie } from "cookies-next";
 import { checkResponse, handleError } from "./erorHandler";
 import { ISearchParams } from "@/interfaces/searchParams.interface";
 import { IEvent } from "@/interfaces/events.interface";
 
 const createApiService = () => {
-    const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+    const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+    const token = getCookie("access_token") as string;;
     type IUpdateEvent = Partial<Pick<
         IEvent,
         | 'name'
@@ -19,7 +21,7 @@ const createApiService = () => {
 
     async function fetchCategories() {
         try {
-            const response = await fetch(`${BASE_URL}/events/categories`, {
+            const response = await fetch(`${BASE_URL}/api/events/categories`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +38,7 @@ const createApiService = () => {
 
     async function fetchEvents() {
         try {
-            const response = await fetch(`${BASE_URL}/events/`, {
+            const response = await fetch(`${BASE_URL}/api/events/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -62,7 +64,7 @@ const createApiService = () => {
             if (params.end_date) query.append("end_date", params.end_date);
             if (params.organizer_id) query.append("organizer_id", params.organizer_id.toString());
 
-            const url = `${BASE_URL}/events/search?${query.toString()}`;
+            const url = `${BASE_URL}/api/events/search?${query.toString()}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
@@ -81,7 +83,7 @@ const createApiService = () => {
 
     async function fetchEventDetail(eventId: number) {
         try {
-            const url = `${BASE_URL}/events/detail/${eventId}`;
+            const url = `${BASE_URL}/api/events/detail/${eventId}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
@@ -99,11 +101,12 @@ const createApiService = () => {
 
     async function updateEvent(eventId: number, body: IUpdateEvent) {
         try {
-            const url = `${BASE_URL}/events/${eventId}`;
+            const url = `${BASE_URL}/api/events/${eventId}`;
             const response = await fetch(url, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(body),
             });
@@ -118,11 +121,12 @@ const createApiService = () => {
 
     async function deleteEvent(eventId: number) {
         try {
-            const url = `${BASE_URL}/events/${eventId}`;
+            const url = `${BASE_URL}/api/events/${eventId}`;
             const response = await fetch(url, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
             });
             await checkResponse(response);
@@ -133,11 +137,12 @@ const createApiService = () => {
 
     async function createEvent(body: IUpdateEvent) {
         try {
-            const url = `${BASE_URL}/event/`;
+            const url = `${BASE_URL}/api/events/`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(body)
             });
