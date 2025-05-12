@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Formik, Form, Field, FormikProps } from "formik";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
+import { API_URL } from "@/config";
 import RegisterSchema from "./schema";
 import IRegister from "./type";
-import { API_URL } from "@/config";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -159,7 +160,7 @@ export default function RegisterForm() {
               </button>
               <div className="flex gap-4 mt-4 mb-4">
                 <button className="flex-1 flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-[#DBE2EF] text-[#112D4E]">
-                  <img
+                  <Image
                     src="/google-icon.svg"
                     alt="Google"
                     className="h-5 w-5 mr-2"
