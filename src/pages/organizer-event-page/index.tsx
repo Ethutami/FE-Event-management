@@ -19,7 +19,7 @@ const EventCard = () => {
 
     useEffect(() => {
         dispatch(actionEventSearch({ organizer_id: 4 }))
-    }, [])
+    }, [dispatch])
 
     useEffect(() => { }, [events])
 
