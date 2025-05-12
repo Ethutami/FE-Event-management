@@ -22,8 +22,8 @@ export default function RegisterForm() {
 
   const register = async (values: IRegister) => {
     try {
-      await axios.post(`${API_URL}/api/auth/register`, values);
-      
+      await axios.post(`${API_URL}/auth/register`, values);
+
       alert("Register Success");
 
       router.push("/check-email");
