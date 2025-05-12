@@ -46,7 +46,7 @@ const ReviewCard = () => {
                             <p className="text-gray-700 mb-2">{review?.message}</p>
                             <div className="flex items-center mt-6">
                                 <Image
-                                    src={review.users.profile_picture}
+                                    src={review.users.profile_picture || '/no-image.png'}
                                     alt={userName}
                                     className="w-12 h-12 rounded-full mr-4"
                                     width={100}
@@ -62,7 +62,7 @@ const ReviewCard = () => {
                         <div className="block md:hidden">
                             <div className="flex items-center mb-6">
                                 <Image
-                                    src={review.users.profile_picture}
+                                    src={review.users.profile_picture || '/no-image.png'}
                                     alt={userName}
                                     className="w-12 h-12 rounded-full mr-4"
                                     width={100}
