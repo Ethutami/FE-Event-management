@@ -7,7 +7,7 @@ import { getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
 import { IMAGE_URL } from "@/config";
 import { useAppSelector, useAppDispatch } from "@/lib/redux/hooks";
-import { onLogin } from "@/lib/redux/features/authSlice";
+import { authSlice, onLogin } from "@/lib/redux/features/authSlice";
 import { IAuth, IUser } from "@/interfaces/auth.interface";
 import { ImageSlider } from "./component/slider.component";
 import CategoryChips from "./component/category.component";
@@ -22,7 +22,8 @@ const HeroSection = () => {
 }
 
 export default function MainPage() {
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAppSelector((state) => state.auth);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -47,15 +48,15 @@ export default function MainPage() {
     <>
       <div className="bg-[#F9F7F7] p-8 rounded-lg shadow-md w-[500px] max-w-md m-auto">
         <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
-          Welcome, {user.first_name} {user.last_name}!
+          {/* Welcome, {user.first_name} {user.last_name}! */}
         </h1>
-        <Link href="/profile">
+        {/* <Link href="/profile">
           <Image
             src={IMAGE_URL + user.profile_picture}
             alt="profile-avatar"
             className="w-[50px] h-[50px] bg-blue-900"
           />
-        </Link>
+        </Link> */}
       </div>
       <div>
         <HeroSection />
