@@ -15,7 +15,7 @@ export default function RegisterForm() {
     email: "",
     first_name: "",
     last_name: "",
-    referral_code: "",
+    referral_code_used: "",
     role: "",
     password: "",
   };
@@ -100,12 +100,12 @@ export default function RegisterForm() {
                   type="text"
                   name="referral_code"
                   onChange={handleChange}
-                  value={values.referral_code}
+                  value={values.referral_code_used}
                   placeholder="Referral Code (optional)"
                   className="w-full p-4 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#DBE2EF] placeholder-[#DBE2EF]"
                 />
-                {touched.referral_code && errors.referral_code ? (
-                  <div className="text-red-500">{errors.referral_code}</div>
+                {touched.referral_code_used && errors.referral_code_used ? (
+                  <div className="text-red-500">{errors.referral_code_used}</div>
                 ) : null}
               </div>
               <div className="mb-4">
