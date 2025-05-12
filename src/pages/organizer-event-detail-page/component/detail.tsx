@@ -52,7 +52,7 @@ export const EventDetails = () => {
             setImagePath('')
             return;
         }
-    }, [param?.id, api]);
+    }, [api, param]);
 
     const onCreateData = () => {
         const newData = {

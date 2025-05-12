@@ -19,6 +19,6 @@ export interface IEvent {
 }
 export interface IEventsState {
     events: IEvent[]
-    loading: boolean
-    error: string | null
+    loading?: boolean
+    error?: string | null
 }

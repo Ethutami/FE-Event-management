@@ -1,5 +1,5 @@
-import { ISearchParams } from "@/interfaces/searchParams.interface";
 import { checkResponse, handleError } from "./erorHandler";
+import { ISearchParams } from "@/interfaces/searchParams.interface";
 import { IEvent } from "@/interfaces/events.interface";
 
 const createApiService = () => {
@@ -130,6 +130,7 @@ const createApiService = () => {
             handleError(error)
         }
     }
+
     async function createEvent(body: IUpdateEvent) {
         try {
             const url = `${BASE_URL}/event/`;
