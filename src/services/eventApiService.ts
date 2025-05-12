@@ -19,7 +19,7 @@ const createApiService = () => {
 
     async function fetchCategories() {
         try {
-            const response = await fetch(`${BASE_URL}/event/categories`, {
+            const response = await fetch(`${BASE_URL}/events/categories`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const createApiService = () => {
 
     async function fetchEvents() {
         try {
-            const response = await fetch(`${BASE_URL}/event/`, {
+            const response = await fetch(`${BASE_URL}/events/`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ const createApiService = () => {
             if (params.end_date) query.append("end_date", params.end_date);
             if (params.organizer_id) query.append("organizer_id", params.organizer_id.toString());
 
-            const url = `${BASE_URL}/event/search?${query.toString()}`;
+            const url = `${BASE_URL}/events/search?${query.toString()}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
@@ -81,7 +81,7 @@ const createApiService = () => {
 
     async function fetchEventDetail(eventId: number) {
         try {
-            const url = `${BASE_URL}/event/detail/${eventId}`;
+            const url = `${BASE_URL}/events/detail/${eventId}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
@@ -99,7 +99,7 @@ const createApiService = () => {
 
     async function updateEvent(eventId: number, body: IUpdateEvent) {
         try {
-            const url = `${BASE_URL}/event/${eventId}`;
+            const url = `${BASE_URL}/events/${eventId}`;
             const response = await fetch(url, {
                 method: "PUT",
                 headers: {
@@ -118,7 +118,7 @@ const createApiService = () => {
 
     async function deleteEvent(eventId: number) {
         try {
-            const url = `${BASE_URL}/event/${eventId}`;
+            const url = `${BASE_URL}/events/${eventId}`;
             const response = await fetch(url, {
                 method: "DELETE",
                 headers: {

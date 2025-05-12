@@ -5,7 +5,7 @@ const createApiService = () => {
 
     async function fetchEventReview(eventId: number) {
         try {
-            const url = `${BASE_URL}/review/event/${eventId}`;
+            const url = `${BASE_URL}/reviews/event/${eventId}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
