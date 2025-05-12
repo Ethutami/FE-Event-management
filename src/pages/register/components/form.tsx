@@ -26,7 +26,7 @@ export default function RegisterForm() {
       
       alert("Register Success");
 
-      router.push("/signin");
+      router.push("/check-email");
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
         const errorMessage = err.response.data.message;
