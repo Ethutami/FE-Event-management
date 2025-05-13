@@ -1,7 +1,5 @@
-import EventOrganizerPage from "../organizer-event-page";
-
 export default function DashboardPage() {
     return (
-        <EventOrganizerPage />
+        <h1>Overview of dashboard</h1>
     )
 }
