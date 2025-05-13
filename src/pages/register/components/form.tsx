@@ -99,7 +99,7 @@ export default function RegisterForm() {
               <div className="mb-4">
                 <Field
                   type="text"
-                  name="referral_code"
+                  name="referral_code_used"
                   onChange={handleChange}
                   value={values.referral_code_used}
                   placeholder="Referral Code (optional)"
