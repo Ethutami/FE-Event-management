@@ -96,6 +96,13 @@
 
 }
 
+@media (min-width: 700px) and (max-width: 1000px) {
+  .regis-css {
+    justify-content: center;
+    align-items: center;
+  }
+}
+
 @media (min-width: 1440px) {
   .custom-size {
     width: 32;
