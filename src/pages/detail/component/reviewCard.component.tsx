@@ -35,7 +35,7 @@ const ReviewCard = () => {
                             }`}
                     >
                         {/* Versi untuk >=700px */}
-                        <div className="hidden md:block grid grid-cols-2 gap-4 w-screen">
+                        <div className="hidden md:block gap-4 w-screen">
                             <div className="mb-4 flex flex-row items-center gap-2 w-fit">
                                 <div className="">
                                     {Array.from({ length: review?.rating }, (_, index) => (

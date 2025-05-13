@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { eventApiService } from "@/services/eventApiService";
 import { IUsers } from "@/interfaces/user.interface";
 import { IEvent } from "@/interfaces/events.interface";
-import ReviewCard from "@/pages/detail/component/reviewCard.componet";
+import ReviewCard from "@/pages/detail/component/reviewCard.component";
 import VoucherCard from "./component/voucher.component";
 import createDateFormatter from "@/components/dateformater";
 

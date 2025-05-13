@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LayoutDashboard, Calendar, BarChart, CreditCard } from "lucide-react";
+import { User, Calendar, BarChart, CreditCard } from "lucide-react";
 
 export default function Sidebar() {
   return (
@@ -8,6 +8,7 @@ export default function Sidebar() {
       <nav>
         <ul className="space-y-2">
           {[
+            { href: "/dashboard/profile", icon: User, label: "Profile" },
             { href: "/dashboard/events", icon: Calendar, label: "Events" },
             {
               href: "/dashboard/transactions",
