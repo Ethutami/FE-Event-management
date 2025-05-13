@@ -77,7 +77,7 @@ export default function LoginForm() {
           const { values, handleChange, touched, errors } = props;
 
           return (
-            <Form className="bg-[#F9F7F7] p-8 rounded-lg shadow-md w-[500px] max-w-md my-3">
+            <Form className="bg-[#F9F7F7] p-8 rounded-lg shadow-md md:w-[500px] max-w-md my-3">
               <h1 className="text-2xl font-bold mb-6 text-[#112D4E]">
                 Welcome Back
               </h1>
