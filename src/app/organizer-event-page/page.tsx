@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { actionEventSearch } from '@/store/slice/eventSearchSlice';
 import { IEvent } from '@/interfaces/events.interface';
 import createDateFormatter from '@/components/dateformater';
-import FilterSection from '@/pages/organizer-event-page/component/eventFilterSection.component';
+import FilterSection from '@/app/organizer-event-page/component/eventFilterSection.component';
 import { checkEventStatus } from '@/components/checkEventStatus.component';
 
 const EventCard = () => {

@@ -1,5 +1,7 @@
-import DashboardPage from "@/pages/dashboard-page";
+import EventOrganizerPage from "../organizer-event-page/page";
 
-export default function Dashboard() {
-    return <DashboardPage/>
+export default function DashboardPage() {
+    return (
+        <EventOrganizerPage />
+    )
 }

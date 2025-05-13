@@ -1,7 +1,9 @@
-import EventOrganizerDetailPage from "@/pages/organizer-event-detail-page";
+import { EventDetails } from "../component/detail";
 
-export default function Detail() {
+export default function EventOrganizerDetailPage() {
     return (
-        <EventOrganizerDetailPage />
+        <div className='mt-16 px-20'>
+            <EventDetails />
+        </div>
     )
 }
