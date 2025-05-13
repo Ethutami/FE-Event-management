@@ -6,10 +6,10 @@ import { jwtDecode } from "jwt-decode";
 
 export default async function middleware(req: NextRequest) {
   try {
+    console.log("running");
     const cookieStore = await cookies();
 
-    const protectedRoute = req.nextUrl.pathname === "/dashboard";
-
+    const protectedRoute = req.nextUrl.pathname === "/dashboard" || "/dashboard/:path";
     const access_token = cookieStore.get("access_token")?.value || "";
 
     if (protectedRoute && access_token) {

@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: IAuth = {
   user: {
+    id: 0,
     email: "",
     first_name: "",
     last_name: "",
@@ -17,6 +18,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     onLogin: (state: IAuth, action: PayloadAction<IAuth>) => {
+      state.user.id = action.payload.user.id;
       state.user.email = action.payload.user.email;
       state.user.first_name = action.payload.user.first_name;
       state.user.last_name = action.payload.user.last_name;
@@ -25,6 +27,7 @@ export const authSlice = createSlice({
       state.isLogin = true;
     },
     onLogout: (state: IAuth) => {
+      state.user.id = 0;
       state.user.email = "";
       state.user.first_name = "";
       state.user.last_name = "";
