@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react";
 import Image from "next/image"
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { eventApiService } from "@/services/eventApiService";
 import { IUsers } from "@/interfaces/user.interface";
 import { IEvent } from "@/interfaces/events.interface";
@@ -127,6 +127,7 @@ const BasicInfo = (
 const DetailPage = () => {
     const [data, setData] = useState<IEvent>()
     const param = useParams()
+    const router = useRouter();
 
     useEffect(() => {
         const api = eventApiService()
@@ -144,7 +145,15 @@ const DetailPage = () => {
             <div>
                 {/* Versi untuk >=700px */}
                 <div className="hidden md:block lg:block px-16 pb-16">
-                    <Image src={data?.path || '/no-image.png'} alt="image" className="w-screen h-screen object-cover relative image " width={800} height={800} priority />
+                    <div className="relative">
+                        <button
+                            onClick={router.back}
+                            className="absolute top-0 left-10 z-11 items-center text-[#3F72AF] font-medium text-sm cursor-pointer mt-2"
+                        >
+                            ← Back
+                        </button>
+                        <Image src={data?.path || '/no-image.png'} alt="image" className="w-screen h-screen object-cover relative image " width={800} height={800} priority />
+                    </div>
                     <VoucherCard />
                     <CardTitle name={data?.name} price={price} users={users} date={date} />
                     <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
@@ -152,6 +161,12 @@ const DetailPage = () => {
                 </div>
                 {/* Versi untuk <700px */}
                 <div className="block md:hidden lg:hidden px-2 pb-16">
+                    <button
+                        onClick={router.back}
+                        className="items-center text-[#3F72AF] font-medium text-sm cursor-pointer mt-2"
+                    >
+                        ← Back
+                    </button>
                     <CardTitle name={name} price={price} users={users} date={date} />
                     <BasicInfo date={date} time={time} location={location} seats={remaining_seats} description={description} price={price} />
                     <VoucherCard />
