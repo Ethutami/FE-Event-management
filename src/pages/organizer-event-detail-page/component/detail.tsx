@@ -223,14 +223,14 @@ export const EventDetails = () => {
 
     return (
         <div className="mt-16 flex flex-col mx-auto bg-white p-8 rounded-xl shadow-md text-sm">
-            <div className='flex flex-row justify-between mb-16'>
+            <div className='header-event-detail mb-16'>
                 <button
                     onClick={router.back}
                     className="items-center text-[#3F72AF] font-medium text-sm cursor-pointer"
                 >
                     ← Back
                 </button>
-                <h2 className="text-center text-2xl font-semibold mb-6 dark:text-[#112D4E]">Event Details</h2>
+                <h2 className="lg:text-center md:text-center text-2xl font-semibold mb-6 dark:text-[#112D4E]">Event Details</h2>
                 {
                     param?.id ?
                         <button
@@ -242,7 +242,7 @@ export const EventDetails = () => {
                 }
             </div>
             <div >
-                <div className="grid md:grid-cols-4 gap-6">
+                <div className="lg:grid md:grid md:grid-cols-4 gap-6">
                     <div className="col-span-2">
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Event Name</label>
                         <div className="relative">
@@ -295,7 +295,7 @@ export const EventDetails = () => {
                         <label className="text-2xs font-light mb-1 block dark:text-[#112D4E]">*End date must be after start date</label>
                     </div>
                 </div>
-                <div className="grid md:grid-cols-4 gap-6 mt-6">
+                <div className="lg:grid md:grid md:grid-cols-4 gap-6 mt-6">
                     <div className='col-span-2'>
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Location</label>
                         <div className="relative">
@@ -346,9 +346,9 @@ export const EventDetails = () => {
                     className={`w-full p-3 h-28 rounded border border-color-gray ${isEditMode ? 'cursor-text text-[#112D4E]' : 'cursor-not-allowed text-color-gray'} resize-none`}
                 />
             </div>
-            <div className="flex flex-row justify-between">
-                <div className="flex items-end gap-2">
-                    <div className="relative">
+            <div className="flex flex-col justify-between flex-fiture-button">
+                <div className="lg:flex items-end gap-2 flex-fiture-price md:grid md:grid-cols-2">
+                    <div className="relative ">
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Ticket Price</label>
                         <div className="relative">
                             <input
@@ -377,30 +377,29 @@ export const EventDetails = () => {
                                 setEventSeat(Number(value))
                             }}
                             readOnly={!isEditMode}
-                            className={`px-3 py-2 rounded border border-color-gray ${isEditMode ? 'cursor-text text-[#112D4E]' : 'cursor-not-allowed text-color-gray'}`}
+                            className={`w-full px-3 py-2 rounded border border-color-gray ${isEditMode ? 'cursor-text text-[#112D4E]' : 'cursor-not-allowed text-color-gray'}`}
                         />
                     </div>
-                    <div >
+                    <div>
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Available Seats</label>
                         <input
                             type="number"
                             value={data?.remaining_seats || ''}
                             readOnly
-                            className='px-3 py-2 rounded border text-color-gray border-color-gray cursor-not-allowed'
+                            className='w-full px-3 py-2 rounded border text-color-gray border-color-gray cursor-not-allowed'
                         />
                     </div>
-                    <div >
+                    <div>
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">Created</label>
                         <input
                             type="date"
                             value={created || ''}
                             disabled
-                            className="px-3 py-2 rounded border text-color-gray border-color-gray cursor-not-allowed"
+                            className="w-full px-3 py-2 rounded border text-color-gray border-color-gray cursor-not-allowed"
                         />
                     </div>
-
                 </div>
-                <div className="flex items-end gap-2">
+                <div className="flex flex-col flex-start gap-2 sm:flex-row lg:items-end">
                     <button
                         onClick={() => { toggleEditMode(); setButtonSave(!buttonSave) }}
                         disabled={!param?.id && isEditMode && !isFormValid()}
@@ -421,7 +420,7 @@ export const EventDetails = () => {
                 </div>
             </div>
             {isEditMode &&
-                <div className='mt-16 border border-color-gray rounded-lg p-2 w-fit dark:text-[#112D4E]'>
+                <div className='mt-16 border border-color-gray rounded-lg p-2 lg:w-fit dark:text-[#112D4E]'>
                     <input
                         type="file"
                         accept="image/*"

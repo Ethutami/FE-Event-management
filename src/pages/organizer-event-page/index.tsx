@@ -35,7 +35,7 @@ const EventCard = () => {
 
     if (events) {
         return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 mt-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mt-16">
                 {events.map((event: IEvent) => {
                     const date = createDateFormatter(event?.end_date).includeWeekday().build()
                     const status = checkEventStatus(event?.start_date, event?.end_date)
