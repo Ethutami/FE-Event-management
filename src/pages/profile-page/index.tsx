@@ -1,15 +1,14 @@
 "use client";
-
 import { useEffect } from "react";
-import Link from "next/link";
-
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { deleteCookie, getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
+import { Edit3, LogOut } from "lucide-react";
 import { onLogin, onLogout } from "@/store/slice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { IAuth, IUser } from "@/interfaces/auth.interface";
-import { useRouter } from "next/navigation";
 import { IMAGE_URL } from "@/config";
+import { IAuth, IUser } from "@/interfaces/auth.interface";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -45,27 +44,21 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="bg-[#F9F7F7] p-8 rounded-lg shadow-md w-3xl m-auto">
-      <div className="max-w-2xl flex justify-between">
+    <div className="px-10 pt-10 rounded-lg shadow-md w-screen m-auto flex flex-row justify-between">
+      <div className="flex flex-row">
+        <Image src={IMAGE_URL + user.profile_picture || '/no-image.png'} alt="profile-picture" className="border-s-black" width={100} height={100} />
         <div>
-          <Link href="#">
-            <img src={IMAGE_URL+user.profile_picture} alt="profile-picture" className="border-s-black" />
-          </Link>
-          <p className="text-2xl font-bold mb-6 text-[#112D4E]">
-            {user.first_name + " " + user.last_name}
+          <p className="text-xl font-bold text-[#112D4E]">
+            {user?.first_name + " " + user.last_name}
           </p>
-          <p className="text-2xl font-bold mb-6 text-[#112D4E]">{user.email}</p>
+          <p className="mb-6 text-[#FBBC05]">{user.email}</p>
         </div>
-        <button className="w-10 h-10 rounded-full bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]">
-          Edit
-        </button>
+        <Edit3 className="hover:text-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]" />
       </div>
-      <button
+      <LogOut
         onClick={handleOnClick}
-        className="w-[150px] h-[50px] p-4 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]"
-      >
-        Logout
-      </button>
+        className="hover:text-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]"
+      />
     </div>
   );
 }

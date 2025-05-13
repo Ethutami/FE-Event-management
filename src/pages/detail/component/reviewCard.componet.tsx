@@ -35,9 +35,9 @@ const ReviewCard = () => {
                             }`}
                     >
                         {/* Versi untuk >=700px */}
-                        <div className="hidden md:block">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex space-x-1">
+                        <div className="hidden md:block grid grid-cols-2 gap-4 w-screen">
+                            <div className="mb-4 flex flex-row items-center gap-2 w-fit">
+                                <div className="">
                                     {Array.from({ length: review?.rating }, (_, index) => (
                                         <span key={index}>⭐</span>
                                     ))}
@@ -47,7 +47,7 @@ const ReviewCard = () => {
                             <p className="text-gray-700 mb-2">{review?.message}</p>
                             <div className="flex items-center mt-6">
                                 <Image
-                                    src={review.users.profile_picture || '/no-image.png'}
+                                    src={review?.users?.profile_picture || '/no-image.png'}
                                     alt={userName}
                                     className="w-12 h-12 rounded-full mr-4"
                                     width={100}
