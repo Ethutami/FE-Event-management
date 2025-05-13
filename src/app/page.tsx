@@ -1,10 +1,7 @@
-import LoginPage from "@/pages/login.page";
-import RegisterPage from "@/pages/register.page";
-
+import LandingPage from "@/pages/landing-page";
 
 export default function Home() {
   return (
-    // <RegisterPage />
-    <LoginPage />
+    <LandingPage />
   );
 }
