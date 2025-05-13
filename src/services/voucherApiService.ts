@@ -5,7 +5,7 @@ const createApiService = () => {
 
     async function fetchEventVoucher(eventId: number) {
         try {
-            const url = `${BASE_URL}/api/vouchers/event/${eventId}`;
+            const url = `${BASE_URL}/api/vouchers/events/${eventId}`;
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
