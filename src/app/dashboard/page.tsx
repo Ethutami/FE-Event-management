@@ -1,5 +1,5 @@
-import DashboardPage from "@/pages/dashboard-page";
+import StatisticDashboardPage from "@/pages/dashboard-page/statistic-page";
 
-export default function Dashboard() {
-    return <DashboardPage/>
+export default function StatisticDashboard() {
+    return <StatisticDashboardPage/>
 }

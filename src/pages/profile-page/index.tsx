@@ -22,6 +22,7 @@ export default function ProfilePage() {
       const user = jwtDecode<IUser>(token); // Decode the JWT to get user data
       const userState: IAuth = {
         user: {
+          id: user.id,
           email: user.email,
           first_name: user.first_name,
           last_name: user.last_name,
