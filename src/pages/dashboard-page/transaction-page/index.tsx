@@ -66,7 +66,7 @@ export default function TransactionsPage() {
             <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-3 hover:shadow-md transition-shadow">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-medium text-gray-900">
+                  <h3 className="font-medium text-white text-center bg-green-400 rounded-2xl p-2 w-20">
                     {transaction.status}
                   </h3>
                   <p className="text-sm text-gray-500">

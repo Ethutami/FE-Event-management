@@ -2,18 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { Formik, Form, Field, FormikProps } from "formik";
 import { API_URL } from "@/config";
 import { onLogin } from "@/store/slice/authSlice";
 import { useAppDispatch } from "@/store/hooks";
 import ILogin from "./type";
 import LoginSchema from "./schema";
+import { useState } from "react";
 
 export default function LoginForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const [error, setError] = useState("");
 
   const initialValues: ILogin = {
     email: "",
@@ -58,6 +60,7 @@ export default function LoginForm() {
       if (axios.isAxiosError(err) && err.response) {
         const errorMessage = err.response.data.message;
         alert(`${errorMessage}`);
+        setError(errorMessage);
       } else {
         alert("An unexpected error occurred");
       }
@@ -96,7 +99,14 @@ export default function LoginForm() {
                   <div className="text-red-500">{errors.email}</div>
                 ) : null}
               </div>
-
+              { error && (
+                <Link
+                  href="/reset-verification"
+                  className="text-red-400 text-sm hover:text-[#3F72AF] ml-2 "
+                >
+                  Forgot password?
+                </Link>
+              )}
               <div className="mb-4">
                 <Field
                   type="password"
@@ -117,18 +127,7 @@ export default function LoginForm() {
               >
                 Sign In
               </button>
-              <div className="flex gap-4 mt-4 mb-4">
-                <button className="flex-1 flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-[#DBE2EF] text-[#112D4E]">
-                  <Image
-                    src="/google-icon.svg"
-                    alt="Google"
-                    className="h-5 w-5 mr-2"
-                    width={100}
-                    height={100}
-                  />
-                  Sign In with Google
-                </button>
-              </div>
+
               <p className="text-center mt-4 text-[#112D4E]">
                 Don&apos;t have an account?{" "}
                 <Link href="/signup" className="text-[#3F72AF] underline">

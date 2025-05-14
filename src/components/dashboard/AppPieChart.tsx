@@ -4,42 +4,27 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from "
 import { TrendingUp } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
+  { browser: "Teknologi", events: 275, fill: "var(--color-chrome)" },
+  { browser: "Self-dev", events: 200, fill: "var(--color-safari)" }
 ];
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  events: {
+    label: "events",
   },
   chrome: {
     label: "Chrome",
-    color: "var(--chart-1)",
+    color: "var(--chart-2)",
   },
   safari: {
     label: "Safari",
-    color: "var(--chart-2)",
-  },
-  firefox: {
-    label: "Firefox",
     color: "var(--chart-3)",
-  },
-  edge: {
-    label: "Edge",
-    color: "var(--chart-4)",
-  },
-  other: {
-    label: "Other",
-    color: "var(--chart-5)",
-  },
+  }
 } satisfies ChartConfig;
 
 export default function AppPieChart() {
-    const totalVisitors = chartData.reduce(
-      (acc, curr) => acc + curr.visitors,
+    const totalevents = chartData.reduce(
+      (acc, curr) => acc + curr.events,
       0
     );
   return (
@@ -56,7 +41,7 @@ export default function AppPieChart() {
           />
           <Pie
             data={chartData}
-            dataKey="visitors"
+            dataKey="events"
             nameKey="browser"
             innerRadius={60}
             strokeWidth={5}
@@ -76,14 +61,14 @@ export default function AppPieChart() {
                         y={viewBox.cy}
                         className="fill-foreground text-3xl font-bold"
                       >
-                        {totalVisitors.toLocaleString()}
+                        {totalevents.toLocaleString()}
                       </tspan>
                       <tspan
                         x={viewBox.cx}
                         y={(viewBox.cy || 0) + 24}
                         className="fill-muted-foreground"
                       >
-                        Visitors
+                        events
                       </tspan>
                     </text>
                   );
@@ -98,7 +83,7 @@ export default function AppPieChart() {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4 text-green-500" />
         </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          Showing total events for the last month
         </div>
       </div>
     </div>

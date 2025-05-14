@@ -1,10 +1,10 @@
 "use client";
-import { useEffect } from "react";
-import Image from "next/image";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteCookie, getCookie } from "cookies-next";
 import { jwtDecode } from "jwt-decode";
-import { Edit3, LogOut } from "lucide-react";
 import { onLogin, onLogout } from "@/store/slice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { IMAGE_URL } from "@/config";
@@ -44,21 +44,35 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="px-10 pt-10 rounded-lg shadow-md w-screen m-auto flex flex-row justify-between">
-      <div className="flex flex-row">
-        <Image src={IMAGE_URL + user.profile_picture || '/no-image.png'} alt="profile-picture" className="border-s-black" width={100} height={100} />
-        <div>
-          <p className="text-xl font-bold text-[#112D4E]">
-            {user?.first_name + " " + user.last_name}
-          </p>
-          <p className="mb-6 text-[#FBBC05]">{user.email}</p>
-        </div>
-        <Edit3 className="hover:text-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]" />
-      </div>
-      <LogOut
-        onClick={handleOnClick}
-        className="hover:text-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF]"
+    <div className="p-10 rounded-lg shadow-md m-auto h-[500px] flex flex-col justify-center items-center">
+      <img
+        src={IMAGE_URL + user.profile_picture || "/no-image.png"}
+        alt="profile-picture"
+        className="rounded-full w-[75px] h-[75px] border-black border-solid border-1 mb-4"
       />
+      <div className="text-center">
+        <p className="text-xl uppercase font-bold text-[#112D4E] mb-2">
+          {user?.first_name + " " + user.last_name}
+        </p>
+        <p className="mb-6 text-[#FBBC05]">{user.email}</p>
+      </div>
+      <button
+        onClick={handleOnClick}
+        className="text-center text-sm w-32 p-2 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF] mt-4"
+      >
+        Log Out
+      </button>
+      <button
+        onClick={handleOnClick}
+        className="text-center w-32 p-2 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF] mt-4"
+      >
+        <Link
+          href="/reset-password"
+          className="text-red-400 text-sm hover:text-[#3F72AF]"
+        >
+          Reset Password
+        </Link>
+      </button>
     </div>
   );
 }

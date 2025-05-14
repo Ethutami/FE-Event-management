@@ -158,18 +158,6 @@ export default function RegisterForm() {
               >
                 Sign Up
               </button>
-              <div className="flex gap-4 mt-4 mb-4">
-                <button className="flex-1 flex items-center justify-center border border-gray-300 py-2 rounded-lg hover:bg-[#DBE2EF] text-[#112D4E]">
-                  <Image
-                    src="/google-icon.svg"
-                    alt="Google"
-                    className="h-5 w-5 mr-2"
-                    width={100}
-                    height={100}
-                  />
-                  Sign Up with Google
-                </button>
-              </div>
               <p className="text-center mt-4 text-[#112D4E]">
                 Have an account?{" "}
                 <Link href="/signin" className="text-[#3F72AF] underline">

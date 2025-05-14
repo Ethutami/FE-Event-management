@@ -3,7 +3,7 @@ import { User, Calendar, BarChart, CreditCard } from "lucide-react";
 
 export default function Sidebar() {
   return (
-    <div className="w-64 bg-indigo-700 text-white p-4">
+    <div className="w-64 bg-[#112D4E] text-white p-4">
       <h1 className="text-2xl font-bold mb-8">Event Dashboard</h1>
       <nav>
         <ul className="space-y-2">
