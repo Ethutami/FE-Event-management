@@ -58,17 +58,11 @@ export default function ProfilePage() {
       </div>
       <button
         onClick={handleOnClick}
-        className="text-center text-sm w-32 p-2 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF] mt-4"
-      >
-        Log Out
-      </button>
-      <button
-        onClick={handleOnClick}
         className="text-center w-32 p-2 rounded-lg bg-[#112D4E] text-white font-bold hover:bg-[#3F72AF] focus:outline-none focus:ring-2 focus:ring-[#DBE2EF] mt-4"
       >
         <Link
           href="/reset-password"
-          className="text-red-400 text-sm hover:text-[#3F72AF]"
+          className="text-white text-sm"
         >
           Reset Password
         </Link>

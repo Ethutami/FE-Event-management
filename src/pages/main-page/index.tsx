@@ -15,7 +15,6 @@ const HeroSection = () => {
 export default function MainPage() {
   return (
     <div>
-      <ProfilePage />
       <HeroSection />
       <CategoryChips />
       <CardComponent />

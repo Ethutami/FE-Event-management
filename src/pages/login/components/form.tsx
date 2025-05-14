@@ -54,7 +54,7 @@ export default function LoginForm() {
       if (user.role == "organizer") {
         router.push("/dashboard");
       } else {
-        router.push("/main");
+        router.push("/");
       }
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
