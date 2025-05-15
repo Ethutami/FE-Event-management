@@ -159,7 +159,7 @@ export default function RegisterForm() {
               </button>
               <p className="text-center mt-4 text-[#112D4E]">
                 Have an account?{" "}
-                <Link href="/login" className="text-[#3F72AF] underline">
+                <Link href="/signin" className="text-[#3F72AF] underline">
                   Sign in
                 </Link>
               </p>
