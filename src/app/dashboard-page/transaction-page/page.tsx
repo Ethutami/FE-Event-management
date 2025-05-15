@@ -2,7 +2,7 @@
 
 import { API_URL } from "@/config";
 import { IAuth, IUser } from "@/interfaces/auth.interface";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useAppDispatch } from "@/store/hooks";
 import { onLogin } from "@/store/slice/authSlice";
 import axios from "axios";
 import { getCookie } from "cookies-next";
@@ -34,9 +34,6 @@ export default function TransactionsPage() {
   }
 
   // Access the user state from the Redux store using the custom hook
-  const user = useAppSelector((state) => state.auth.user);
-  console.log(user.id);
-
   async function fetchTransactions() {
     try {
       const { data } = await axios.get(
