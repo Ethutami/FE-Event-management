@@ -16,6 +16,7 @@ export default function ResetVerificationForm() {
 
   const VerifyReset = async (values: IVerifyReset) => {
     try {
+      console.log(values.email);
       await axios.post(`${API_URL}/api/auth/resetverify`, {
         email: values.email,
       });

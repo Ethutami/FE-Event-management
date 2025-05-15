@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import { Formik, Form, Field, FormikProps } from "formik";
 import { API_URL } from "@/config";
 import { onLogin } from "@/store/slice/authSlice";
