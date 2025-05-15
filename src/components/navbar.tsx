@@ -59,8 +59,9 @@ export default function Navbar() {
   return (
     <nav
       ref={navbarRef}
-      className={`bg-[#112D4E] fixed top-0 w-full z-50 transition-transform duration-300 ${isVisible ? "transform translate-y-0" : "transform -translate-y-full"
-        }`}
+      className={`bg-[#112D4E] fixed top-0 w-full z-50 transition-transform duration-300 ${
+        isVisible ? "transform translate-y-0" : "transform -translate-y-full"
+      }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -109,7 +110,9 @@ export default function Navbar() {
                   <Image
                     src={IMAGE_URL + user.profile_picture || "/no-image.png"}
                     alt="profile-picture"
-                    className="rounded-full w-[40px] h-[40px] border-white border-solid border-1"
+                    className="rounded-full border-white border-solid border-1"
+                    width={40}
+                    height={40}
                   />
                   <LogOutIcon
                     className="text-white hover:text-red-500"
@@ -170,7 +173,9 @@ export default function Navbar() {
               <Image
                 src={IMAGE_URL + user.profile_picture || "/no-image.png"}
                 alt="profile-picture"
-                className="rounded-full w-[40px] h-[40px] border-white border-solid border-1 ml-5 mb-2"
+                className="rounded-full border-white border-solid border-1 ml-5 mb-2"
+                width={40}
+                height={40}
               />
             )}
             {links.map(({ name, url }) => (

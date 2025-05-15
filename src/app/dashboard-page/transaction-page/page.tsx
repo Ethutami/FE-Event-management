@@ -47,7 +47,6 @@ export default function TransactionsPage() {
           },
         }
       );
-      console.log(data.data);
       setTransactions(data.data);
     } catch (err) {
       console.log(err);

@@ -49,7 +49,7 @@ export default function ProfilePage() {
       <Image
         src={IMAGE_URL + user.profile_picture || "/no-image.png"}
         alt="profile-picture"
-        className="rounded-full w-[75px] h-[75px] border-black border-solid border-1 mb-4"
+        className="rounded-full border-black border-solid border-1 mb-4"
         width={100}
         height={100}
       />
