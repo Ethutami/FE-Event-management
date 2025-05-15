@@ -130,7 +130,7 @@ export default function LoginForm() {
 
               <p className="text-center mt-4 text-[#112D4E]">
                 Don&apos;t have an account?{" "}
-                <Link href="/register" className="text-[#3F72AF] underline">
+                <Link href="/signup" className="text-[#3F72AF] underline">
                   Sign Up
                 </Link>
               </p>
