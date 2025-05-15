@@ -26,7 +26,6 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/signin", req.nextUrl)); // Redirect if not an organizer
   } catch (err) {
     console.log(err);
-
     return NextResponse.redirect(new URL("/signin", req.nextUrl));
   }
 }

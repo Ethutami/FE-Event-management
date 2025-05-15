@@ -5,7 +5,7 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col md:flex-row w-full justify-between">
       <div className="flex justify-center items-center w-full md:w-1/2">
-        <LoginForm/>
+        <LoginForm />
       </div>
       <Image
         src={"/banner.svg"}

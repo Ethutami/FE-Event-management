@@ -81,7 +81,6 @@ const ReviewCard = () => {
                             <span className="text-gray-500 text-sm">{date}</span>
                         </div>
                     </div>
-
                 )
             })}
         </div>
