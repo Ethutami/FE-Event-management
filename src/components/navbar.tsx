@@ -110,6 +110,8 @@ export default function Navbar() {
                     src={IMAGE_URL + user.profile_picture || "/no-image.png"}
                     alt="profile-picture"
                     className="rounded-full w-[40px] h-[40px] border-white border-solid border-1"
+                    height={100}
+                    width={100}
                   />
                   <LogOutIcon
                     className="text-white hover:text-red-500"
@@ -171,6 +173,8 @@ export default function Navbar() {
                 src={IMAGE_URL + user.profile_picture || "/no-image.png"}
                 alt="profile-picture"
                 className="rounded-full w-[40px] h-[40px] border-white border-solid border-1 ml-5 mb-2"
+                height={100}
+                width={100}
               />
             )}
             {links.map(({ name, url }) => (
