@@ -13,10 +13,10 @@ export default function VerifyPage() {
         const token = urlParams.get("token");
 
         if (token) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const response = await axios.patch(`${API_URL}/api/auth/verify`, {
             token,
           });
-          console.log("Success:", response.data);
         }
       } catch (error) {
         console.error("Error:", error);
