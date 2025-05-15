@@ -18,7 +18,6 @@ export default function ResetPasswordForm() {
     try {
       const urlParams = new URLSearchParams(window.location.search);
       const token = urlParams.get("token");
-      console.log(token);
 
       if (values.new_password !== values.confirm_password) throw new Error("Please enter your password again corectly");
 
@@ -32,7 +31,7 @@ export default function ResetPasswordForm() {
 
       alert("Reset Password Success");
 
-      router.push("/login")
+      router.push("/signin")
     } catch (err) {
       if (axios.isAxiosError(err) && err.response) {
         const errorMessage = err.response.data.message;
