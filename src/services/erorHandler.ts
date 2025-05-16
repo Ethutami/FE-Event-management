@@ -11,7 +11,8 @@ export const handleError = (error: unknown) => {
 export const checkResponse = async (response: Response) => {
     if (!response.ok) {
         const errorText = await response.statusText;
+        const res = await response.json()
+        alert(res.message)
         handleError(new Error(`HTTP error ${response.status}: ${errorText}`));
-
     }
 };

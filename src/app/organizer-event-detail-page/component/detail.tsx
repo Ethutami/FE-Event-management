@@ -1,7 +1,7 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { CalendarDays, MapPin, SquarePlus, Tag } from 'lucide-react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -28,8 +28,10 @@ export const EventDetails = () => {
     const [imagePath, setImagePath] = useState('');
     const [buttonSave, setButtonSave] = useState(false);
     const param = useParams()
+    const searchParams = useSearchParams();
     const router = useRouter();
     const api = eventApiService()
+    const status = searchParams.get('status');
 
     const isFormValid = () => {
         return (
@@ -54,8 +56,8 @@ export const EventDetails = () => {
     }, [api, param?.id])
 
     function handleUpdateService() {
-        const ISOStartDate = newStartDate?.toISOString() || "2025-05-15T10:00:00Z"
-        const ISOEndDate = newEndDate?.toISOString() || "2025-05-15T18:00:00Z"
+        const ISOStartDate = newStartDate?.toISOString() || ""
+        const ISOEndDate = newEndDate?.toISOString() || ""
 
         let seats = 0
         let remainingSeats = 0
@@ -97,13 +99,14 @@ export const EventDetails = () => {
             }
         }
         async function set() {
-            await api.updateEvent(Number(param?.id), eventDetails)
-            handleDataService()
-            setIsEditMode(!isEditMode)
-            return;
+            const success = await api.updateEvent(Number(param?.id), eventDetails)
+            if (success) {
+                handleDataService()
+                setIsEditMode(!isEditMode)
+                return;
+            }
         }
         set()
-        return;
     }
 
     const onAppear = useCallback(async () => {
@@ -133,8 +136,8 @@ export const EventDetails = () => {
             name: eventName.toString(),
             description: eventDescription.toString(),
             category_id: Number(categorySelected.id),
-            start_date: newEndDate?.toISOString().toString(),
-            end_date: newStartDate?.toISOString().toString(),
+            start_date: newStartDate?.toISOString().toString(),
+            end_date: newEndDate?.toISOString().toString(),
             total_seats: Number(eventSeat),
             remaining_seats: Number(eventSeat),
             price: Number(eventPrice),
@@ -142,7 +145,10 @@ export const EventDetails = () => {
             organizer_id: Number(4),
         }
         async function set() {
-            await api.createEvent(newData)
+            const success = await api.createEvent(newData)
+            if (success) {
+                router.back()
+            }
         }
         set()
     }
@@ -186,6 +192,8 @@ export const EventDetails = () => {
             setImagePath(data?.path || '')
             setEventDescription(data?.description || '')
             setEventName(data?.name || '')
+            setNewStartDate(new Date(data?.start_date || ''))
+            setEndDate(new Date(data?.end_date || ''))
             handleCategoryService();
             if (buttonSave) {
                 handleUpdateService();
@@ -193,7 +201,6 @@ export const EventDetails = () => {
             }
         } else {
             onCreateData();
-            router.back();
         }
     };
 
@@ -209,12 +216,20 @@ export const EventDetails = () => {
             setImagePath('')
             setEventDescription('')
             setEventName('')
+            setCategorySelected({
+                id: 0,
+                category: "",
+            })
+
         } else {
             try {
-                api.deleteEvent(Number(param?.id))
-                api.searchEvents({ organizer_id: data?.id })
-                router.back()
-                return;
+                async function setDelete() {
+                    await api.deleteEvent(Number(param?.id))
+                    await api.searchEvents({ organizer_id: data?.id })
+                    router.back()
+                    return;
+                }
+                setDelete()
             } catch (error) {
                 console.log(error);
             }
@@ -264,7 +279,8 @@ export const EventDetails = () => {
                             {isEditMode ? <DatePicker
                                 selected={newStartDate}
                                 onChange={(date) => setNewStartDate(date)}
-                                className="w-full pl-10 pr-3 py-2 rounded border border-color-gray text-[#112D4E]"
+                                disabled={status === 'On Going' || status === 'Expired'}
+                                className={`w-full pl-10 pr-3 py-2 rounded border border-color-gray text-[#112D4E] ${(status === "On Going" || status === 'Expired') && "cursor-not-allowed"}`}
                             /> :
                                 <input
                                     type="date"
@@ -274,7 +290,6 @@ export const EventDetails = () => {
                                 />}
                             <CalendarDays className="absolute left-3 top-2.5 h-4 w-4 text-color-gray" />
                         </div>
-                        <label className="text-2xs font-light mb-1 block dark:text-[#112D4E]">*Start date must be at least tomorrow.</label>
                     </div>
                     <div>
                         <label className="text-xs font-medium mb-1 block dark:text-[#112D4E]">End Date</label>
@@ -292,7 +307,6 @@ export const EventDetails = () => {
                                 />}
                             <CalendarDays className="absolute left-3 top-2.5 h-4 w-4 text-color-gray" />
                         </div>
-                        <label className="text-2xs font-light mb-1 block dark:text-[#112D4E]">*End date must be after start date</label>
                     </div>
                 </div>
                 <div className="lg:grid md:grid md:grid-cols-4 gap-6 mt-6">
@@ -316,6 +330,9 @@ export const EventDetails = () => {
                             disabled={!isEditMode}
                             onChange={(e) => onHandleCategory(e.target.value)}
                         >
+                            <option value="" disabled>
+                                Select Category
+                            </option>
                             {categories.map((item) => (
                                 <option key={item.id} value={item.category}>
                                     {item.category}

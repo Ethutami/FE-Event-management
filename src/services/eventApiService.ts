@@ -147,6 +147,7 @@ const createApiService = () => {
                 body: JSON.stringify(body)
             });
             await checkResponse(response);
+            return response.ok
         } catch (error) {
             handleError(error)
         }

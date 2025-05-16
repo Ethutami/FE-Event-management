@@ -44,7 +44,10 @@ const EventCard = () => {
                     const status = checkEventStatus(event?.start_date, event?.end_date)
                     return (
                         <div key={event?.id} className='rounded-2xl shadow-md bg-[#DBE2EF] overflow-hidden focus:outline-none transition-transform hover:scale-105'>
-                            <Link href={`/organizer-event-detail-page/${event?.id}`}>
+                            <Link href={{
+                                pathname: `/organizer-event-detail-page/${event?.id}`,
+                                query: { status }
+                            }}>
                                 <div className="relative " >
                                     <Image src={event?.path} alt={event?.name} className="w-full h-40 object-cover rounded-t-2xl" height={100} width={100} />
                                     <span
