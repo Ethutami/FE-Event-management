@@ -4,6 +4,7 @@ export interface IUser {
   first_name: string;
   last_name: string;
   role: string;
+  referral_code: string;
   profile_picture: string;
 }
 

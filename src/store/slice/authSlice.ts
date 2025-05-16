@@ -7,6 +7,7 @@ const initialState: IAuth = {
     first_name: "",
     last_name: "",
     role: "",
+    referral_code: "",
     profile_picture: "",
     id: 0
   },
@@ -22,6 +23,7 @@ export const authSlice = createSlice({
       state.user.first_name = action.payload.user.first_name;
       state.user.last_name = action.payload.user.last_name;
       state.user.role = action.payload.user.role;
+      state.user.referral_code = action.payload.user.referral_code;
       state.user.profile_picture = action.payload.user.profile_picture;
       state.isLogin = true;
     },
@@ -30,6 +32,7 @@ export const authSlice = createSlice({
       state.user.first_name = "";
       state.user.last_name = "";
       state.user.role = "";
+      state.user.referral_code = "";
       state.user.profile_picture = "";
       state.isLogin = false;
     },
