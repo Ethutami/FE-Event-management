@@ -1,4 +1,4 @@
-import EventOrganizerDetailPage from "@/pages/organizer-event-detail-page";
+import EventOrganizerDetailPage from "@/app/organizer-event-detail-page/[id]/page";
 
 export default function Detail() {
     return (

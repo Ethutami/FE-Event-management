@@ -9,6 +9,7 @@ const initialState: IAuth = {
     last_name: "",
     role: "",
     profile_picture: "",
+    id: 0
   },
   isLogin: false,
 };

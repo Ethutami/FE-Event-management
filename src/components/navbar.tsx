@@ -9,10 +9,11 @@ import { jwtDecode } from "jwt-decode";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { LogOutIcon } from "lucide-react";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  const [isVisible, setIsVisible] = useState<boolean>(true);
+  const [isVisible] = useState<boolean>(true);
 
   const dispatch = useAppDispatch();
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -58,9 +59,8 @@ export default function Navbar() {
   return (
     <nav
       ref={navbarRef}
-      className={`bg-[#112D4E] fixed top-0 w-full z-50 transition-transform duration-300 ${
-        isVisible ? "transform translate-y-0" : "transform -translate-y-full"
-      }`}
+      className={`bg-[#112D4E] fixed top-0 w-full z-50 transition-transform duration-300 ${isVisible ? "transform translate-y-0" : "transform -translate-y-full"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -106,10 +106,13 @@ export default function Navbar() {
               )}
               {isLogin && (
                 <>
-                  <img
+                  <Image
                     src={IMAGE_URL + user.profile_picture || "/no-image.png"}
                     alt="profile-picture"
-                    className="rounded-full w-[40px] h-[40px] border-white border-solid border-1"
+                    className="rounded-full border-white border-solid border-1"
+                    //eslint error -> widht dan height is must
+                    width={40}
+                    height={40}
                   />
                   <LogOutIcon
                     className="text-white hover:text-red-500"
@@ -167,10 +170,13 @@ export default function Navbar() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {isLogin && (
-              <img
+              <Image
                 src={IMAGE_URL + user.profile_picture || "/no-image.png"}
                 alt="profile-picture"
-                className="rounded-full w-[40px] h-[40px] border-white border-solid border-1 ml-5 mb-2"
+                className="rounded-full border-white border-solid border-1 ml-5 mb-2"
+                //eslint error -> widht dan height is required
+                width={40}
+                height={40}
               />
             )}
             {links.map(({ name, url }) => (

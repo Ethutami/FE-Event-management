@@ -1,5 +1,6 @@
-import VerifyPage from "@/pages/verify-page";
+import VerifyPage from "../verify-page/page";
+
 
 export default function verivy() {
-    return <VerifyPage/>
+    return <VerifyPage />
 }

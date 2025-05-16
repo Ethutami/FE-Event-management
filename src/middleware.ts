@@ -6,11 +6,10 @@ import { jwtDecode } from "jwt-decode";
 
 export default async function middleware(req: NextRequest) {
   try {
-    console.log("running");
     const cookieStore = await cookies();
 
-    const protectedRoute =
-      req.nextUrl.pathname === "/dashboard" || "/dashboard/:path";
+    const protectedRoute = req.nextUrl.pathname === "/dashboard" || "/dashboard/:path*";
+
     const access_token = cookieStore.get("access_token")?.value || "";
 
     if (protectedRoute && access_token) {
@@ -26,6 +25,7 @@ export default async function middleware(req: NextRequest) {
 
     return NextResponse.redirect(new URL("/signin", req.nextUrl)); // Redirect if not an organizer
   } catch (err) {
+    console.log(err);
     return NextResponse.redirect(new URL("/signin", req.nextUrl));
   }
 }

@@ -1,4 +1,4 @@
-import TransactionsPage from "@/pages/dashboard-page/transaction-page";
+import TransactionsPage from "@/app/dashboard-page/transaction-page/page";
 
 export default function TransactionDashboard() {
   return <TransactionsPage />;
