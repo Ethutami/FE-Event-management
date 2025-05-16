@@ -54,8 +54,8 @@ export const EventDetails = () => {
     }, [api, param?.id])
 
     function handleUpdateService() {
-        const ISOStartDate = newStartDate?.toISOString() || "2025-05-15T10:00:00Z"
-        const ISOEndDate = newEndDate?.toISOString() || "2025-05-15T18:00:00Z"
+        const ISOStartDate = newStartDate?.toISOString() || ""
+        const ISOEndDate = newEndDate?.toISOString() || ""
 
         let seats = 0
         let remainingSeats = 0
@@ -186,6 +186,8 @@ export const EventDetails = () => {
             setImagePath(data?.path || '')
             setEventDescription(data?.description || '')
             setEventName(data?.name || '')
+            setNewStartDate(new Date(data?.start_date || ''))
+            setEndDate(new Date(data?.end_date || ''))
             handleCategoryService();
             if (buttonSave) {
                 handleUpdateService();

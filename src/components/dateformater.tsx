@@ -54,7 +54,7 @@ function createDateFormatter(dateString: string) {
         }
 
         if (options.dateFormat) {
-            return dateString ? new Date(dateString).toISOString().slice(0, 10) : '';
+            return dateString ? new Date(dateString).toLocaleDateString('sv-SE') : '';
         }
 
         formattedDate = date.toLocaleDateString('id-ID', formatOptions);
