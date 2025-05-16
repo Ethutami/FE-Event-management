@@ -213,10 +213,13 @@ export const EventDetails = () => {
             setEventName('')
         } else {
             try {
-                api.deleteEvent(Number(param?.id))
-                api.searchEvents({ organizer_id: data?.id })
-                router.back()
-                return;
+                async function setDelete() {
+                    await api.deleteEvent(Number(param?.id))
+                    await api.searchEvents({ organizer_id: data?.id })
+                    router.back()
+                    return;
+                }
+                setDelete()
             } catch (error) {
                 console.log(error);
             }
