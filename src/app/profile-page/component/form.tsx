@@ -11,9 +11,11 @@ import EditProfileSchema from "./schema";
 import { getCookie } from "cookies-next";
 import { API_URL } from "@/config";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function EditProfileForm() {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [isEditMode, setIsEditMode] = useState(false);
 
@@ -186,12 +188,20 @@ export default function EditProfileForm() {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    className="w-[175px] h-[50px] p-2 bg-[#112D4E] text-white font-medium rounded-md hover:bg-[#FFCB00]"
-                    onClick={() => setIsEditMode(true)}
-                  >
-                    Edit Information
-                  </button>
+                  <div className="flex gap-3">
+                    <button
+                      className="w-[175px] h-[50px] p-2 bg-[#112D4E] text-white font-medium rounded-md hover:bg-[#FFCB00]"
+                      onClick={() => setIsEditMode(true)}
+                    >
+                      Edit Information
+                    </button>
+                    <button
+                      className="w-[175px] h-[50px] p-2 bg-red-400 text-white font-medium rounded-md hover:bg-[#FFCB00]"
+                      onClick={() => router.push("/reset-password")}
+                    >
+                      Change Password
+                    </button>
+                  </div>
                 )}
               </div>
             </Form>

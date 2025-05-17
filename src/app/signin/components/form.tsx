@@ -42,6 +42,7 @@ export default function LoginForm() {
           first_name: user.first_name,
           last_name: user.last_name,
           role: user.role,
+          referral_code: user.rereferral_code,
           profile_picture: user.profile_picture,
         },
         isLogin: true,
