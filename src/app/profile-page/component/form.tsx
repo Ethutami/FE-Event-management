@@ -51,7 +51,12 @@ export default function EditProfileForm() {
 
   const updateProfile = async (values: IProfile) => {
     try {
-      await axios.put(`${API_URL}/api/users/${user.id}`, values);
+      const token = getCookie("access_token") as string;
+      await axios.put(`${API_URL}/api/users/${user.id}`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
 
       alert("Update Profile Success");
 
@@ -138,7 +143,7 @@ export default function EditProfileForm() {
 
                 <div className="mb-4">
                   <label className="block text-[#112D4E] text-sm font-medium mb-1">
-                    First Name
+                    Email
                   </label>
                   {isEditMode ? (
                     <>
