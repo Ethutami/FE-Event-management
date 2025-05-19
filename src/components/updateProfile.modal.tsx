@@ -13,7 +13,7 @@ interface ModalProps {
   onClose: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
+const UpdateProfileModal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
   const user = useAppSelector((state) => state.auth.user);
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -109,4 +109,4 @@ const Modal: React.FC<ModalProps> = ({ isVisible, onClose }) => {
   );
 };
 
-export default Modal;
+export default UpdateProfileModal;

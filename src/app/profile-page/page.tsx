@@ -5,11 +5,11 @@ import Image from "next/image";
 import { Calendar, CircleParking, LogOutIcon, SquarePen, Zap } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import EditProfileForm from "./component/form";
-import Modal from "@/components/modal";
 import { useState } from "react";
 import { onLogout } from "@/store/slice/authSlice";
 import { deleteCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
+import UpdateProfileModal from "@/components/updateProfile.modal";
 
 export default function ProfilePage() {
   // Access the user state from the Redux store using the custom hook
@@ -78,7 +78,7 @@ export default function ProfilePage() {
         </div>
         <EditProfileForm />
       </div>
-      <Modal isVisible={showModal} onClose={() => setShowModal(false)} />
+      <UpdateProfileModal isVisible={showModal} onClose={() => setShowModal(false)} />
     </div>
   );
 }

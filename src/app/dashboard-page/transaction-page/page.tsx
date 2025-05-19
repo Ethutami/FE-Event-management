@@ -1,83 +1,116 @@
-"use client"
+"use client";
 
-import { API_URL } from "@/config";
-import { IAuth, IUser } from "@/interfaces/auth.interface";
-import { useAppDispatch } from "@/store/hooks";
-import { onLogin } from "@/store/slice/authSlice";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import { jwtDecode } from "jwt-decode";
-import { useEffect, useState } from "react";
+import { API_URL } from "@/config";
+import TransactionModal from "@/components/showTransaction.modal";
 
 export default function TransactionsPage() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [transactions, setTransactions] = useState<any[]>([]);
-  const dispatch = useAppDispatch();
-  const token = getCookie("access_token") as string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [selectedTransaction, setSelectedTransaction] = useState<any | null>(
+    null
+  );
+  const [showModal, setShowModal] = useState(false);
 
-  async function getUser() {
-    if (token) {
-      const user = jwtDecode<IUser>(token); // Decode the JWT to get user data
-      const userState: IAuth = {
-        user: {
-          id: user.id,
-          email: user.email,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          role: user.role,
-          profile_picture: user.profile_picture,
-        },
-        isLogin: true,
-      };
-      dispatch(onLogin(userState)); // Update Redux state with transformed user data
-    }
-  }
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const organizerId = urlParams.get("id");
+        const token = getCookie("access_token") as string;
 
-  // Access the user state from the Redux store using the custom hook
-  async function fetchTransactions() {
+        const { data } = await axios.get(
+          `${API_URL}/api/transactions/organizer/${organizerId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // Sort transactions to show undone first
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const sortedTransactions = data.data.sort((a: any, b: any) => {
+          if (a.status === "done" && b.status !== "done") return 1;
+          if (a.status !== "done" && b.status === "done") return -1;
+          return 0;
+        });
+
+        setTransactions(sortedTransactions);
+      } catch (err) {
+        console.error("Error fetching transactions:", err);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
+  const handleTransactionClick = async (transactionId: string) => {
     try {
+      const token = getCookie("access_token") as string;
       const { data } = await axios.get(
-        `${API_URL}/api/transactions/56`,
+        `${API_URL}/api/transactions/detail/${transactionId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      setTransactions(data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
-  useEffect(() => {
-    getUser();
-    fetchTransactions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+      setSelectedTransaction(data.data[0]);
+      setShowModal(true);
+      console.log(data.data[0]);
+    } catch (err) {
+      console.error("Error fetching transaction details:", err);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Transaction Management</h1>
+
       <div>
         {transactions?.map((transaction) => (
-          <div key={transaction.id}>
+          <div
+            key={transaction.id}
+            onClick={() => handleTransactionClick(transaction.id)}
+          >
             <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 mb-3 hover:shadow-md transition-shadow">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-medium text-white text-center bg-green-400 rounded-2xl p-2 w-20">
+                  <h3
+                    className={`font-medium text-center capitalize rounded-2xl p-2 mb-3 ${
+                      transaction.status === "done"
+                        ? "bg-green-400 text-white"
+                        : "bg-red-400 text-white"
+                    }`}
+                  >
                     {transaction.status}
                   </h3>
                   <p className="text-sm text-gray-500">
-                    {transaction.event_id}
+                    Event ID: {transaction.event_id}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Transaction ID: {transaction.id}
                   </p>
                 </div>
                 <span className="font-semibold">
-                  Rp.16.000
+                  Rp.
+                  {(
+                    transaction.ticket_quantity * transaction.events.price
+                  ).toLocaleString("id-ID")}
                 </span>
               </div>
 
               <div className="flex justify-between mt-2 text-sm text-gray-500">
-                <span>{transaction.payment_date}</span>
+                <span>
+                  {new Date(transaction.payment_date).toLocaleDateString(
+                    "id-ID"
+                  )}
+                </span>
                 {transaction.payment_method && (
                   <span>• {transaction.payment_method}</span>
                 )}
@@ -86,6 +119,13 @@ export default function TransactionsPage() {
           </div>
         ))}
       </div>
+      {selectedTransaction && (
+        <TransactionModal
+          isVisible={showModal}
+          onClose={() => setShowModal(false)}
+          transaction={selectedTransaction}
+        />
+      )}
     </div>
   );
 }
