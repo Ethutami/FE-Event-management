@@ -8,11 +8,20 @@ import { IEvent } from "@/interfaces/events.interface"
 import VoucherCard from "../component/voucher.component";
 import ReviewCard from "../component/reviewCard.componet";
 import createDateFormatter from "@/components/dateformater";
+import { getCookie } from "cookies-next";
 
 const CardTitle = (
     { name, users, price, date }
         : { name: string; users: IUsers; price: number, date: string }
 ) => {
+    const handleClickBuy = () => {
+        try {
+            const token = getCookie("access_token") as string;
+            if (!token) throw new Error("Please sign in first to attend this event");
+        } catch (err) {
+            alert(err);
+        }
+    }
     return (
         <div className="relative bg-[#F2F2F2] mt-4 p-6 flex justify-between items-center w-fit
             md:p-16 lg:p-16 md:mt-16 lg:mt-16 md:rounded-lg lg:rounded-lg md:shadow-md lg:shadow-md ">
@@ -25,7 +34,7 @@ const CardTitle = (
             </div>
             <div className="hidden md:block lg:block bg-[#DBE2EF] p-3 rounded-lg text-center">
                 <div className="text-xl text-[#FBBC05] font-semibold mb-2">{`Rp. ${price}`}</div>
-                <button className="bg-blue-900 text-2xl text-[#F9F7F7] px-4 py-1 rounded-md">
+                <button className="bg-blue-900 text-2xl text-[#F9F7F7] px-4 py-1 rounded-md" onClick={handleClickBuy}>
                     Buy Ticket
                 </button>
             </div>
@@ -36,6 +45,16 @@ const BasicInfo = (
     { date, time, location, seats, description, price }
         : { date: string, time: string, location: string, seats: number, description: string, price: number, }
 ) => {
+    const handleClickBuy = () => {
+      try {
+        const token = getCookie("access_token") as string;
+        if (!token)
+          throw new Error("Please sign in first to attend this event");
+      } catch (err) {
+        alert(err);
+      }
+    };
+
     return (
         <>
             {/* Versi untuk >=700px */}
@@ -117,7 +136,7 @@ const BasicInfo = (
                         </div>
                     </div>
                 </section>
-                <button className="bg-[#112D4E] dark:bg-[#FBBC05] text-white px-10  py-2 rounded-lg font-semibold hover:bg-[#0b2242] transition">
+                <button className="bg-[#112D4E] dark:bg-[#FBBC05] text-white px-10  py-2 rounded-lg font-semibold hover:bg-[#0b2242] transition" onClick={handleClickBuy}>
                     Buy Tickets
                 </button>
             </div>
@@ -161,7 +180,7 @@ const DetailPage = () => {
                     <ReviewCard />
                 </div>
                 {/* Versi untuk <700px */}
-                <div className="flex flex-col w-screen block md:hidden lg:hidden px-2 pb-16">
+                <div className="flex flex-col w-screen md:hidden lg:hidden px-2 pb-16">
                     <button
                         onClick={router.back}
                         className="text-[#3F72AF] font-medium text-sm cursor-pointer mt-2"
